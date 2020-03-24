@@ -4,12 +4,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ping Pong</title>
+    <title>Ping Pong on JS</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-
+    <div id="menu">
+        <div id="title">PING PONG on JS</div>
+        <div id="menuCont">
+            <label>Score to Win:</label>
+            <div id="scoreCont">
+                <div id="scoreC">
+                    <button id="mScore">-</button>
+                    <div id="textScore">0</div>
+                    <button id="pScore">+</button>
+                </div>
+            </div>
+            <button class="menuBtn" id="startBtn">Start Game</button>
+        </div>
+    </div>
     <canvas id="canvas"></canvas>
 
     <script src="event.js"></script>

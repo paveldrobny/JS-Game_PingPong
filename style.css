@@ -1,12 +1,101 @@
 body {
   background: rgb(29, 29, 29);
   overflow: hidden;
+  user-select: none;
 }
 
-canvas{
+canvas {
+  border: 1px solid #a0a0a0;
+}
+
+canvas, #menu {
   position: absolute;
-  top: 50%;
+  top: 45%;
   left: 50%;
   transform: translate(-50%, -50%);
-  border: 1px solid gray;
+}
+
+button {
+  border: 1px solid rgb(109, 109, 109)
+}
+
+#menu {
+  display: block;
+  pointer-events: all;
+  z-index: 999;
+  width: 850px;
+  height: 550px;
+}
+
+#title{
+  position: relative;
+  text-align: center;
+  font-size: 41px;
+  top: 20px;
+  color: white;
+}
+
+#menuCont {
+  position: absolute;
+  width: 270px;
+  height: 150px;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#menuCont label {
+  font-size: 20px;
+  color: white;
+}
+
+.menuBtn {
+  height: 50px;
+}
+
+.menuBtn, #scoreCont, #mScore, #pScore {
+  outline: none;
+  transition: .15s;
+  color: white;
+  font-size: 21px;
+  background: rgb(46, 46, 46);
+}
+
+.menuBtn, #scoreCont {
+  width: 100%;
+  font-size: 21px;
+  margin: 5px 0;
+}
+
+.menuBtn:hover, #mScore:hover, #pScore:hover {
+  border: 3px solid rgb(44, 139, 255);
+}
+
+#scoreC {
+  position: absolute;
+  width: 170px;
+  height: 35px;
+  margin: 5px 0;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+#scoreCont {
+  height: 45px;
+}
+
+#mScore, #pScore {
+  width: 35px;
+  height: 35px;
+  float: left;
+  transition: .15s;
+  color: white;
+}
+
+#textScore {
+  width: 100px;
+  padding: 6px 0;
+  vertical-align: center;
+  float: left;
 }

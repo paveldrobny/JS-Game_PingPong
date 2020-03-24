@@ -1,222 +1,285 @@
 let canvas = document.getElementById("canvas"),
-  context = canvas.getContext("2d");
+  context = canvas.getContext("2d"),
+  mainMenu = document.getElementById("menu"),
+  startBtn = document.getElementById("startBtn"),
+  textScore = document.getElementById("textScore"),
+  mScore = document.getElementById("mScore"),
+  pScore = document.getElementById("pScore");
 
-canvas.width = 650;
-canvas.height = 450;
 
-let gameStart = true,
-  gameEnd = false,
-  gameEndScore = 3;
+canvas.width = 850;
+canvas.height = 550;
 
-let p1X = 30,
-  p1Y = canvas.height / 2 - 30,
-  p2X = canvas.width - 39,
-  p2Y = canvas.height / 2 - 30,
-  pSpeed = 6,
-  pH = 60,
-  p1KeyUp = false,
-  p1KeyDown = false,
-  p2KeyUp = false,
-  p2KeyDown = false;
 
-let bX = canvas.width / 2,
-  bY = canvas.height / 2,
-  ballR = 10,
-  bXS = 4,
-  bYS = -4;
+//#region INIT
+let player1 = new Player(15, canvas.height / 2 - 41, "green");
+let player2 = new Player(canvas.width - 25, canvas.height / 2 - 41, "red");
+let ball = new Ball(canvas.width / 2, canvas.height / 2, 10, "gray");
+let input = new Input();
+let gameM = new GameManager();
+let ui = new UI();
+textScore.innerHTML = gameM.scoreToEnd;
+//#endregion
 
-let p1Score = 0,
-  p2Score = 0;
 
-function player1() {
+//#region PLAYER
+function Player(x, y, color) {
+  this.x = x;
+  this.y = y;
+  this.w = 10;
+  this.h = 82;
+  this.speed = 5;
+  this.color = color;
+  this.isUpKey = false;
+  this.isDownKey = false;
+}
+
+Player.prototype.draw = function () {
+  context.fillStyle = this.color;
+  context.fillRect(this.x, this.y, this.w, this.h);
+}
+Player.prototype.move = function () {
+  this.x++;
+}
+//#endregion
+
+
+//#region BALL
+function Ball(x, y, r, color) {
+  this.x = x;
+  this.y = y;
+  xS = 4;
+  yS = -4;
+  this.r = r;
+  this.color = color;
+}
+
+Ball.prototype.draw = function () {
   context.beginPath();
-  context.rect(p1X, p1Y, 10, pH);
-  context.fillStyle = "green";
+  context.fillStyle = this.color;
+  context.arc(this.x, this.y, this.r, Math.PI * 2, 0);
   context.fill();
   context.closePath();
 }
 
-function player2() {
-  context.beginPath();
-  context.rect(p2X, p2Y, 10, pH);
-  context.fillStyle = "red";
-  context.fill();
-  context.closePath();
+Ball.prototype.move = function () {
+  if (this.y > canvas.height - this.r || this.y < 0 + this.r) {
+    yS = -yS;
+  }
+
+  if (this.x > player1.x && this.x < player1.x + 10 && this.y > player1.y && this.y < player1.y + player1.h) {
+    xS = -xS;
+  }
+  if (this.x > player2.x && this.x < player2.x + 10 && this.y > player2.y && this.y < player2.y + player2.h) {
+    xS = -xS;
+  }
+  if (gameM.gameStart && gameM.gameEnd == false) {
+    this.x += xS;
+    this.y += yS;
+  }
+  console.log("GS " + gameM.gameStart)
+  console.log("GE " + gameM.gameEnd)
 }
 
-let Ball = function() {
-  this.drawBall = function() {
-    context.beginPath();
-    context.arc(bX, bY, ballR, 0, Math.PI * 2);
-    context.fillStyle = "gray";
-    context.fill();
-    context.closePath();
-  };
-  this.moveBall = function() {
-    if (bY > canvas.height - ballR || bY < 0 + ballR) {
-      bYS = -bYS;
-    }
+Ball.prototype.restart = function () {
+  this.x = canvas.width / 2;
+  this.y = canvas.height / 2;
+}
+//#endregion
 
-    if (bX > p1X && bX < p1X + 10 && bY > p1Y && bY < p1Y + pH) {
-      bXS = -bXS;
-    }
-    if (bX > p2X && bX < p2X + 10 && bY > p2Y && bY < p2Y + pH) {
-      bXS = -bXS;
-    }
-    if (!gameEnd) {
-      bX += bXS;
-      bY += bYS;
-    }
-  };
-  this.restartBall = function() {
-    bX = canvas.width / 2;
-    bY = canvas.height / 2;
-  };
-};
 
-let Game = function() {
-  this.StartGame = function() {
-    gameStart = true;
-  };
-  this.Area = function() {
-    if (p1Y < 0) {
-      p1Y = 0;
-    }
-    if (p1Y > canvas.height - pH) {
-      p1Y = canvas.height - pH;
-    }
-    if (p2Y < 0) {
-      p2Y = 0;
-    }
-    if (p2Y > canvas.height - pH) {
-      p2Y = canvas.height - pH;
-    }
-  };
-  this.AddScore = function() {
-    if (bX > canvas.width - ballR) {
-      p1Score++;
-      ball.restartBall();
-    }
-    if (bX < 0 + ballR) {
-      p2Score++;
-      ball.restartBall();
-    }
-  };
-  this.WinPlayer = function() {
-    if (p1Score >= gameEndScore || p2Score >= gameEndScore) {
-      hud.Win();
-      hud.ReturnToMenu();
-    }
-  };
-  this.WinScore = function(a, b) {
-    a = p1Score;
-    b = p2Score;
-    gameEnd = true;
-    if (a > b) return "player1";
-    else return "player2";
-  };
-};
+//#region INPUT 
+function Input() {
+  keyW = 87;
+  keyS = 83;
+  keyA = 65;
+  keyD = 68;
+  keyArrowUp = 38;
+  keyArrowDown = 40;
+  keyArrowLeft = 37;
+  keyArrowRight = 39;
+  keySpace = 32;
+  keyEnter = 13;
+}
 
-let HUD = function() {
-  this.Score = function() {
-    context.font = "30px sans-serif";
-    context.fillStyle = "white";
-    context.textAlign = "center";
-    context.fillText(p1Score + " : " + p2Score, canvas.width / 2, 41);
-  };
-  this.Win = function() {
-    context.font = "50px sans-serif";
-    context.fillStyle = "orange";
-    context.textAlign = "center";
-    context.fillText(
-      "Победа: " + game.WinScore(),
-      canvas.width / 2,
-      canvas.height / 2 - 35
-    );
-  };
-  this.ReturnToMenu = function() {
-    context.font = "23px sans-serif";
-    context.fillStyle = "white";
-    context.textAlign = "center";
-    context.fillText(
-      "Space - начать заново",
-      canvas.width / 2,
-      canvas.height - 30
-    );
-  };
-};
-
-window.addEventListener("keydown", keyPress);
-window.addEventListener("keyup", keyUp);
-
-function keyPress(e) {
-  let kC = e.keyCode;
-  if (kC == 87) {
-    p1KeyUp = true;
+Input.prototype.keyDown = function (e) {
+  if (e.keyCode == keyW) {
+    player1.isUpKey = true;
   }
-  if (kC == 83) {
-    p1KeyDown = true;
+  if (e.keyCode == keyS) {
+    player1.isDownKey = true;
   }
-  if (kC == 38) {
-    p2KeyUp = true;
+  if (e.keyCode == keyArrowUp) {
+    player2.isUpKey = true;
   }
-  if (kC == 40) {
-    p2KeyDown = true;
+  if (e.keyCode == keyArrowDown) {
+    player2.isDownKey = true;
   }
-  if (e.keyCode == 32 && gameEnd) {
-    location.reload();
+  if (gameM.gameEnd) {
+    if (e.keyCode == keySpace) {
+      gameM.gameStart = false;
+      location.reload();
+    }
   }
 }
 
-function keyUp(e) {
-  let kC = e.keyCode;
-  if (kC == 87) {
-    p1KeyUp = false;
+Input.prototype.keyUp = function (e) {
+  if (e.keyCode == keyW) {
+    player1.isUpKey = false;
   }
-  if (kC == 83) {
-    p1KeyDown = false;
+  if (e.keyCode == keyS) {
+    player1.isDownKey = false;
   }
-  if (kC == 38) {
-    p2KeyUp = false;
+  if (e.keyCode == keyArrowUp) {
+    player2.isUpKey = false;
   }
-  if (kC == 40) {
-    p2KeyDown = false;
-  }
-}
-
-function detectMove() {
-  if (p1KeyUp) {
-    p1Y -= pSpeed;
-  }
-  if (p1KeyDown) {
-    p1Y += pSpeed;
-  }
-  if (p2KeyUp) {
-    p2Y -= pSpeed;
-  }
-  if (p2KeyDown) {
-    p2Y += pSpeed;
+  if (e.keyCode == keyArrowDown) {
+    player2.isDownKey = false;
   }
 }
 
-let ball = new Ball();
-let hud = new HUD();
-let game = new Game();
+Input.prototype.keyDetect = function (e) {
+  if (player1.isUpKey) {
+    player1.y -= player1.speed;
+  }
+  if (player1.isDownKey) {
+    player1.y += player1.speed;
+  }
+  if (player2.isUpKey) {
+    player2.y -= player2.speed;
+  }
+  if (player2.isDownKey) {
+    player2.y += player2.speed;
+  }
+}
+//#endregion
 
-function draw() {
+
+//#region GAME MANAGER
+function GameManager() {
+  leftW = 0;
+  rightW = canvas.width;
+  topH = 0;
+  bottomH = canvas.height;
+  this.p1Score = 0;
+  this.p2Score = 0;
+  this.scoreToEnd = 2;
+  this.gameStart = false;
+  this.gameEnd = false;
+}
+
+GameManager.prototype.area = function () {
+  if (player1.y < topH) {
+    player1.y = topH;
+  }
+  if (player1.y > bottomH - player1.h) {
+    player1.y = bottomH - player1.h;
+  }
+  if (player2.y < topH) {
+    player2.y = topH;
+  }
+  if (player2.y > bottomH - player2.h) {
+    player2.y = bottomH - player2.h;
+  }
+}
+
+GameManager.prototype.addScore = function () {
+  if (ball.x < leftW) {
+    gameM.p2Score++;
+    ball.restart();
+  } if (ball.x > rightW) {
+    gameM.p1Score++;
+    ball.restart();
+  }
+  if (this.p1Score >= this.scoreToEnd || this.p2Score >= this.scoreToEnd) {
+    gameM.gameEnd = true;
+    ui.winPlayer();
+    ui.message("Press the Spacebar to return to the menu.");
+  }
+}
+
+GameManager.prototype.mScoreToEnd = function () {
+  if (gameM.scoreToEnd > 2) {
+    gameM.scoreToEnd -= 2;
+    textScore.innerHTML = gameM.scoreToEnd;
+  }
+}
+
+GameManager.prototype.pScoreToEnd = function () {
+  if (gameM.scoreToEnd < 100) {
+    gameM.scoreToEnd += 2;
+    textScore.innerHTML = gameM.scoreToEnd;
+  }
+}
+
+GameManager.prototype.startGame = function () {
+  gameM.gameStart = true;
+  menu.style.display = "none";
+}
+
+GameManager.prototype.endGame = function () {
+  a = this.p1Score;
+  b = this.p2Score;
+  if (a > b) return "Player 1";
+  else return "Player 2";
+}
+//#endregion
+
+
+//#region UI 
+function UI() {
+  x = canvas.width;
+  y = canvas.height;
+}
+
+UI.prototype.score = function () {
+  context.font = '27px sans-serif';
+  context.fillStyle = 'white';
+  context.textAlign = 'center';
+  context.fillText(gameM.p1Score + " : " + gameM.p2Score, x / 2, 35);
+}
+
+UI.prototype.winPlayer = function () {
+  context.font = '45px sans-serif';
+  context.fillStyle = 'orange';
+  context.textAlign = 'center';
+  context.fillText(gameM.endGame() + " Won!", x / 2, y / 2 - 30);
+}
+
+UI.prototype.message = function (mess) {
+  context.font = '19px sans-serif';
+  context.fillStyle = '#a0a0a0';
+  context.textAlign = 'center';
+  context.fillText(mess, x / 2, y - 26);
+}
+//#endregion 
+
+
+//#region EVENTS 
+window.addEventListener("keydown", input.keyDown);
+window.addEventListener("keyup", input.keyUp);
+startBtn.addEventListener("click", gameM.startGame);
+mScore.addEventListener("click", gameM.mScoreToEnd);
+pScore.addEventListener("click", gameM.pScoreToEnd);
+//#endregion
+
+
+function gameLoop() {
   context.clearRect(0, 0, canvas.width, canvas.height);
-  if (gameStart) {
-    player1();
-    player2();
-    detectMove();
-    ball.drawBall();
-    ball.moveBall();
-    hud.Score();
-    game.Area();
-    game.AddScore();
-    game.WinPlayer();
+  if (gameM.gameStart) {
+    player1.draw();
+    player2.draw();
+    ball.draw();
+    ball.move();
+    input.keyDetect();
+    gameM.area();
+    gameM.addScore();
+    ui.score();
   }
-  requestAnimationFrame(draw);
+  if (!gameM.gameStart) {
+    menu.style.display = "block";
+  }
+  requestAnimationFrame(gameLoop);
 }
 
-draw();
+gameLoop();
