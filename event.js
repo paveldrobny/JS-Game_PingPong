@@ -8,8 +8,8 @@ let canvas = document.getElementById("canvas"),
   battleBtn = document.getElementsByClassName("battleBtn");
 
 
-canvas.width = 850;
-canvas.height = 550;
+canvas.width = 860;
+canvas.height = 560;
 
 var AI_Pos = canvas.height / 2 - 41;
 
@@ -206,7 +206,7 @@ GameManager.prototype.addScore = function () {
     gameM.gameEnd = true;
     ui.winPlayer();
     ui.message("Press the Spacebar to return to the menu.");
-  }else{
+  } else {
     ui.scoreEndMath();
   }
 }
@@ -238,12 +238,12 @@ GameManager.prototype.endGame = function () {
 }
 
 GameManager.prototype.AI = function () {
-  AI_Pos = (ball.y - 10) + Math.floor(Math.random() * 3) + 9;
-  player2.y = AI_Pos;
-  if(game_Type == 2){
+  if (game_Type == 2) {
     AI_Pos = (ball.y - 10) + Math.floor(Math.random() * 3) + 9;
     player1.y = AI_Pos;
   }
+  AI_Pos = (ball.y - 10) + Math.floor(Math.random() * 3) + 9;
+  player2.y = AI_Pos;
 }
 
 //#endregion
