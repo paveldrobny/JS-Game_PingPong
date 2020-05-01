@@ -206,6 +206,8 @@ GameManager.prototype.addScore = function () {
     gameM.gameEnd = true;
     ui.winPlayer();
     ui.message("Press the Spacebar to return to the menu.");
+  }else{
+    ui.scoreEndMath();
   }
 }
 
@@ -258,6 +260,13 @@ UI.prototype.score = function () {
   context.fillStyle = 'white';
   context.textAlign = 'center';
   context.fillText(gameM.p1Score + " : " + gameM.p2Score, x / 2, 35);
+}
+
+UI.prototype.scoreEndMath = function () {
+  context.font = '19px sans-serif';
+  context.fillStyle = 'gray';
+  context.textAlign = 'center';
+  context.fillText("Score to end: " + gameM.scoreToEnd, x / 2, y - 15);
 }
 
 UI.prototype.winPlayer = function () {
