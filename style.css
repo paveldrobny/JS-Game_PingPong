@@ -39,9 +39,9 @@ button {
 
 #menuCont {
   position: absolute;
-  width: 270px;
+  width: 300px;
   height: 150px;
-  top: 43%;
+  top: 38%;
   left: 50%;
   transform: translate(-50%, -50%);
 }

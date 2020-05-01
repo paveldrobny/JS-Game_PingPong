@@ -11,11 +11,19 @@ let canvas = document.getElementById("canvas"),
 canvas.width = 850;
 canvas.height = 550;
 
-var AI_Pos = canvas.height / 2 - 41,
-  isAI_Game = false;
+var AI_Pos = canvas.height / 2 - 41;
+
+
+/*
+LOCAL MODE - game_Type = 0;
+AI MODE - game_Type = 1;
+SPECTATOR MODE - game_Type = 2;
+*/
+var game_Type = 0;
+
 
 //#region INIT
-let player1 = new Player(15, canvas.height / 2 - 41, "green");
+let player1 = new Player(15, AI_Pos, "green");
 let player2 = new Player(canvas.width - 25, AI_Pos, "red");
 let ball = new Ball(canvas.width / 2, canvas.height / 2, 10, "gray");
 let input = new Input();
@@ -230,7 +238,10 @@ GameManager.prototype.endGame = function () {
 GameManager.prototype.AI = function () {
   AI_Pos = (ball.y - 10) + Math.floor(Math.random() * 3) + 9;
   player2.y = AI_Pos;
-  console.log(AI_Pos);
+  if(game_Type == 2){
+    AI_Pos = (ball.y - 10) + Math.floor(Math.random() * 3) + 9;
+    player1.y = AI_Pos;
+  }
 }
 
 //#endregion
@@ -266,19 +277,24 @@ UI.prototype.message = function (mess) {
 
 
 //#region EVENTS 
-let Btn_Local = document.getElementById("Btn_Local"),
-  Btn_AI = document.getElementById("Btn_AI");
-Btn_Local.addEventListener("click", function () {
-  Btn_Local.classList.add("active");
-  Btn_AI.classList.remove("active");
-  isAI_Game = false;
-})
 
-Btn_AI.addEventListener("click", function () {
-  Btn_AI.classList.add("active");
-  Btn_Local.classList.remove("active");
-  isAI_Game = true;
-})
+for (let i = 0; i < battleBtn.length; i++) {
+  battleBtn[i].addEventListener("click", function () {
+    for (let i of battleBtn) i.classList.remove("active");
+    battleBtn[i].classList.add("active");
+    switch (i) {
+      case 0:
+        game_Type = 0;
+        break;
+      case 1:
+        game_Type = 1;
+        break;
+      case 2:
+        game_Type = 2;
+        break;
+    }
+  })
+}
 window.addEventListener("keydown", input.keyDown);
 window.addEventListener("keyup", input.keyUp);
 startBtn.addEventListener("click", gameM.startGame);
@@ -295,7 +311,7 @@ function gameLoop() {
     ball.draw();
     ball.move();
     input.keyDetect();
-    if (isAI_Game) {
+    if (game_Type == 1 || game_Type == 2) {
       gameM.AI();
     }
     gameM.area();
