@@ -4,16 +4,19 @@ let canvas = document.getElementById("canvas"),
   startBtn = document.getElementById("startBtn"),
   textScore = document.getElementById("textScore"),
   mScore = document.getElementById("mScore"),
-  pScore = document.getElementById("pScore");
+  pScore = document.getElementById("pScore"),
+  battleBtn = document.getElementsByClassName("battleBtn");
 
 
 canvas.width = 850;
 canvas.height = 550;
 
+var AI_Pos = canvas.height / 2 - 41,
+  isAI_Game = false;
 
 //#region INIT
 let player1 = new Player(15, canvas.height / 2 - 41, "green");
-let player2 = new Player(canvas.width - 25, canvas.height / 2 - 41, "red");
+let player2 = new Player(canvas.width - 25, AI_Pos, "red");
 let ball = new Ball(canvas.width / 2, canvas.height / 2, 10, "gray");
 let input = new Input();
 let gameM = new GameManager();
@@ -223,6 +226,13 @@ GameManager.prototype.endGame = function () {
   if (a > b) return "Player 1";
   else return "Player 2";
 }
+
+GameManager.prototype.AI = function () {
+  AI_Pos = (ball.y - 10) + Math.floor(Math.random() * 3) + 9;
+  player2.y = AI_Pos;
+  console.log(AI_Pos);
+}
+
 //#endregion
 
 
@@ -256,6 +266,19 @@ UI.prototype.message = function (mess) {
 
 
 //#region EVENTS 
+let Btn_Local = document.getElementById("Btn_Local"),
+  Btn_AI = document.getElementById("Btn_AI");
+Btn_Local.addEventListener("click", function () {
+  Btn_Local.classList.add("active");
+  Btn_AI.classList.remove("active");
+  isAI_Game = false;
+})
+
+Btn_AI.addEventListener("click", function () {
+  Btn_AI.classList.add("active");
+  Btn_Local.classList.remove("active");
+  isAI_Game = true;
+})
 window.addEventListener("keydown", input.keyDown);
 window.addEventListener("keyup", input.keyUp);
 startBtn.addEventListener("click", gameM.startGame);
@@ -272,6 +295,9 @@ function gameLoop() {
     ball.draw();
     ball.move();
     input.keyDetect();
+    if (isAI_Game) {
+      gameM.AI();
+    }
     gameM.area();
     gameM.addScore();
     ui.score();
