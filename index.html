@@ -5,6 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ping Pong on JS</title>
+    <!-- Include icons -->
+    <link href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" rel="stylesheet">
+    <!-- Include fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&amp;display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -12,21 +18,34 @@
     <div id="menu">
         <div id="title">PING PONG on JS</div>
         <div id="menuCont">
-            <label>Score to Win:</label>
-            <div id="scoreCont">
-                <div id="scoreC">
-                    <button id="mScore">-</button>
-                    <div id="textScore">0</div>
-                    <button id="pScore">+</button>
-                </div>
+            <label>Score to win: 2 - 100</label>
+            <div class="selectorContent">
+                <div class="selector_leftBtn" id="mScore"><i class="fas fa-angle-left"></i></div>
+                <div class="selector_text" id="textScore">2</div>
+                <div class="selector_rightBtn" id="pScore"><i class="fas fa-angle-right"></i></div>
             </div>
-            <label>Match:</label>
-            <div>
-                <button id="Btn_Local" class="battleBtn active">Local</button>
-                <button id="Btn_AI" class="battleBtn">AI</button>
-                <button id="Btn_Spectator" class="battleBtn">Spectator</button>
+            <label>Match type: Local, AI, Spectator</label>
+            <div class="selectorContent">
+                <div class="selector_leftBtn" id="mMatchType"><i class="fas fa-angle-left"></i></div>
+                <div class="selector_text" id="textMatchType">Local</div>
+                <div class="selector_rightBtn" id="pMatchType"><i class="fas fa-angle-right"></i></div>
+            </div>
+            <label>AI difficulty: Easy, Normal, Hard</label>
+            <div class="selectorContent">
+                <div class="selector_leftBtn" id="mAI_Dif"><i class="fas fa-angle-left"></i></div>
+                <div class="selector_text" id="textAI_Diff">Easy</div>
+                <div class="selector_rightBtn" id="pAI_Dif"><i class="fas fa-angle-right"></i></div>
             </div>
             <button class="menuBtn" id="startBtn">Start Game</button>
+        </div>
+
+        <div id="window_Settings">
+            <label>Window scale: 70% - 150%</label>
+            <div class="settingsContent">
+                <div class="selector_leftBtn" id="mZoom"><i class="fas fa-angle-left"></i></div>
+                <div class="settings_text" id="textZoom">100%</div>
+                <div class="selector_rightBtn" id="pZoom"><i class="fas fa-angle-right"></i></div>
+            </div>
         </div>
     </div>
     <canvas id="canvas"></canvas>

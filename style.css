@@ -1,5 +1,6 @@
 body {
   background: rgb(29, 29, 29);
+  font-family: 'Open Sans', sans-serif;
   overflow: hidden;
   user-select: none;
 }
@@ -29,7 +30,7 @@ button {
   height: 550px;
 }
 
-#title{
+#title {
   position: relative;
   text-align: center;
   font-size: 41px;
@@ -41,13 +42,13 @@ button {
   position: absolute;
   width: 300px;
   height: 150px;
-  top: 38%;
+  top: 37%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
 #menuCont label {
-  font-size: 20px;
+  font-size: 18px;
   color: white;
 }
 
@@ -55,7 +56,7 @@ button {
   height: 50px;
 }
 
-.menuBtn, #scoreCont, #mScore, #pScore {
+.menuBtn {
   outline: none;
   transition: .15s;
   color: white;
@@ -63,55 +64,80 @@ button {
   background: rgb(46, 46, 46);
 }
 
-.menuBtn, #scoreCont {
+.menuBtn {
   width: 100%;
   font-size: 21px;
   margin: 5px 0;
 }
 
-.menuBtn:hover, #mScore:hover, #pScore:hover{
+.menuBtn:hover {
   border: 3px solid rgb(44, 139, 255);
 }
 
-#scoreC {
+#window_Settings{
   position: absolute;
-  width: 170px;
-  height: 35px;
-  margin: 5px 0;
-  left: 50%;
-  transform: translateX(-50%);
+  right: 3px;
+  bottom: 3px;
+}
+
+#window_Settings label{
+  float: left;
+  line-height: 42px;
+  padding-right: 15px;
+  font-size: 18px;
+  color: white;
+}
+
+.settingsContent {
+  float: left;
+  width: 156px;
+}
+
+.settings_text {
+  float: left;
+  text-align: center;
+  width: 70px;
+  height: 42px;
+  line-height: 42px;
+  color: white;
+}
+
+.selectorContent {
+  width: 100%;
+  height: 42px;
+  margin-top: 3px;
+  margin-bottom: 10px;
+  background: rgb(43, 43, 43);
+}
+
+.selector_leftBtn, .selector_text, .selector_rightBtn{
+  float: left;
+  height: 38px;
+  line-height: 38px;
+  color: white;
+}
+
+.selector_leftBtn, .selector_rightBtn {
+  width: 38px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: .15s;
+  background: rgb(53, 53, 53);
+}
+
+.selector_leftBtn:hover, .selector_rightBtn:hover {
+  border: 2px solid rgb(44, 139, 255);
+}
+
+.fa-angle-left, .fa-angle-right {
+  width: 100%;
+  font-size: 21px;
   text-align: center;
 }
 
-#scoreCont {
-  height: 45px;
-}
-
-#mScore, #pScore {
-  width: 35px;
-  height: 35px;
-  float: left;
-  transition: .15s;
-  color: white;
-}
-
-#textScore {
-  width: 100px;
-  padding: 6px 0;
-  vertical-align: center;
-  float: left;
-}
-
-.battleBtn{
-  margin: 5px 0;
-  width: 49%;
-  height: 41px;
+.selector_text {
+  width: 216px;
   font-size: 18px;
-  color: white;
-  transition: .15s;
-  background: rgb(46, 46, 46);
-}
-
-.battleBtn.active{
-  border: 3px solid rgb(76, 255, 31);
+  transition: .3s;
+  text-align: center;
 }

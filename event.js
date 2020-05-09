@@ -5,21 +5,31 @@ let canvas = document.getElementById("canvas"),
   textScore = document.getElementById("textScore"),
   mScore = document.getElementById("mScore"),
   pScore = document.getElementById("pScore"),
-  battleBtn = document.getElementsByClassName("battleBtn");
+  textMatchType = document.getElementById("textMatchType"),
+  mMatchType = document.getElementById("mMatchType"),
+  pMatchType = document.getElementById("pMatchType"),
+  textAI_Diff = document.getElementById("textAI_Diff"),
+  mAI_Dif = document.getElementById("mAI_Dif"),
+  pAI_Dif = document.getElementById("pAI_Dif"),
+  textZoom = document.getElementById("textZoom");
+mZoom = document.getElementById("mZoom"),
+  pZoom = document.getElementById("pZoom"),
 
 
-canvas.width = 860;
+  canvas.width = 860;
 canvas.height = 560;
 
 var AI_Pos = canvas.height / 2 - 41;
 
+var MatchType_arr = ["Local", "AI", "Spectator"];
+var matchType_index = 0;
 
-/*
-LOCAL MODE - game_Type = 0;
-AI MODE - game_Type = 1;
-SPECTATOR MODE - game_Type = 2;
-*/
-var game_Type = 0;
+var AI_difficulty_arr = ["Easy", "Normal", "Hard"];
+var AI_difficulty_index = 0;
+
+var Zoom_arr = ["70%", "80%", "90%", "100%",
+  "110%", "120%", "130%", "140%", "150%"];
+var Zoom_index = 3; // Default 100%
 
 
 //#region INIT
@@ -207,10 +217,11 @@ GameManager.prototype.addScore = function () {
     ui.winPlayer();
     ui.message("Press the Spacebar to return to the menu.");
   } else {
-    ui.scoreEndMath();
+    // Else UI
   }
 }
 
+// UI SELECTOR 
 GameManager.prototype.mScoreToEnd = function () {
   if (gameM.scoreToEnd > 2) {
     gameM.scoreToEnd -= 2;
@@ -225,6 +236,63 @@ GameManager.prototype.pScoreToEnd = function () {
   }
 }
 
+GameManager.prototype.mMatchType = function () {
+  if (matchType_index <= 0) {
+    matchType_index = 0
+  } else {
+    matchType_index--;
+  }
+  textMatchType.innerHTML = MatchType_arr[matchType_index];
+}
+
+GameManager.prototype.pMatchType = function () {
+  if (matchType_index >= MatchType_arr.length - 1) {
+    matchType_index = MatchType_arr.length - 1;
+  } else {
+    matchType_index++;
+  }
+  textMatchType.innerHTML = MatchType_arr[matchType_index];
+}
+
+GameManager.prototype.mAI_Dif = function () {
+  if (AI_difficulty_index <= 0) {
+    AI_difficulty_index = 0
+  } else {
+    AI_difficulty_index--;
+  }
+  textAI_Diff.innerHTML = AI_difficulty_arr[AI_difficulty_index];
+}
+
+GameManager.prototype.pAI_Dif = function () {
+  if (AI_difficulty_index >= AI_difficulty_arr.length - 1) {
+    AI_difficulty_index = AI_difficulty_arr.length - 1;
+  } else {
+    AI_difficulty_index++;
+  }
+  textAI_Diff.innerHTML = AI_difficulty_arr[AI_difficulty_index];
+}
+
+GameManager.prototype.mZoom = function () {
+  if (Zoom_index <= 0) {
+    Zoom_index = 0
+  } else {
+    Zoom_index--;
+  }
+  textZoom.innerHTML = Zoom_arr[Zoom_index];
+  document.body.style.zoom = Zoom_arr[Zoom_index];
+}
+
+GameManager.prototype.pZoom = function () {
+  if (Zoom_index >= Zoom_arr.length - 1) {
+    Zoom_index = Zoom_arr.length - 1;
+  } else {
+    Zoom_index++;
+  }
+  textZoom.innerHTML = Zoom_arr[Zoom_index];
+  document.body.style.zoom = Zoom_arr[Zoom_index];
+}
+
+
 GameManager.prototype.startGame = function () {
   gameM.gameStart = true;
   menu.style.display = "none";
@@ -238,12 +306,30 @@ GameManager.prototype.endGame = function () {
 }
 
 GameManager.prototype.AI = function () {
-  if (game_Type == 2) {
-    AI_Pos = (ball.y - 10) + Math.floor(Math.random() * 3) + 9;
-    player1.y = AI_Pos;
+  const EASY = 10, NORMAL = 9, HARD = 8;
+  if (AI_difficulty_index == 0) {
+    if (matchType_index == 2) {
+      AI_Pos = (ball.y - 10) + Math.floor(Math.random() * 3) + EASY;
+      player1.y = AI_Pos;
+    }
+    AI_Pos = (ball.y - 10) + Math.floor(Math.random() * 3) + EASY;
+    player2.y = AI_Pos;
   }
-  AI_Pos = (ball.y - 10) + Math.floor(Math.random() * 3) + 9;
-  player2.y = AI_Pos;
+  else if (AI_difficulty_index == 1) {
+    if (matchType_index == 2) {
+      AI_Pos = (ball.y - 10) + Math.floor(Math.random() * 3) + NORMAL;
+      player1.y = AI_Pos;
+    }
+    AI_Pos = (ball.y - 10) + Math.floor(Math.random() * 3) + NORMAL;
+    player2.y = AI_Pos;
+  } else if (AI_difficulty_index == 2) {
+    if (matchType_index == 2) {
+      AI_Pos = (ball.y - 10) + Math.floor(Math.random() * 3) + HARD;
+      player1.y = AI_Pos;
+    }
+    AI_Pos = (ball.y - 10) + Math.floor(Math.random() * 3) + HARD;
+    player2.y = AI_Pos;
+  }
 }
 
 //#endregion
@@ -260,13 +346,6 @@ UI.prototype.score = function () {
   context.fillStyle = 'white';
   context.textAlign = 'center';
   context.fillText(gameM.p1Score + " : " + gameM.p2Score, x / 2, 35);
-}
-
-UI.prototype.scoreEndMath = function () {
-  context.font = '19px sans-serif';
-  context.fillStyle = 'gray';
-  context.textAlign = 'center';
-  context.fillText("Score to end: " + gameM.scoreToEnd, x / 2, y - 15);
 }
 
 UI.prototype.winPlayer = function () {
@@ -287,28 +366,19 @@ UI.prototype.message = function (mess) {
 
 //#region EVENTS 
 
-for (let i = 0; i < battleBtn.length; i++) {
-  battleBtn[i].addEventListener("click", function () {
-    for (let i of battleBtn) i.classList.remove("active");
-    battleBtn[i].classList.add("active");
-    switch (i) {
-      case 0:
-        game_Type = 0;
-        break;
-      case 1:
-        game_Type = 1;
-        break;
-      case 2:
-        game_Type = 2;
-        break;
-    }
-  })
-}
+
 window.addEventListener("keydown", input.keyDown);
 window.addEventListener("keyup", input.keyUp);
 startBtn.addEventListener("click", gameM.startGame);
 mScore.addEventListener("click", gameM.mScoreToEnd);
 pScore.addEventListener("click", gameM.pScoreToEnd);
+mMatchType.addEventListener("click", gameM.mMatchType);
+pMatchType.addEventListener("click", gameM.pMatchType);
+mAI_Dif.addEventListener("click", gameM.mAI_Dif);
+pAI_Dif.addEventListener("click", gameM.pAI_Dif);
+mZoom.addEventListener("click", gameM.mZoom);
+pZoom.addEventListener("click", gameM.pZoom);
+
 //#endregion
 
 
@@ -320,7 +390,7 @@ function gameLoop() {
     ball.draw();
     ball.move();
     input.keyDetect();
-    if (game_Type == 1 || game_Type == 2) {
+    if (matchType_index == 1 || matchType_index == 2) {
       gameM.AI();
     }
     gameM.area();
