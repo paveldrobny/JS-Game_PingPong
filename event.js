@@ -28,7 +28,7 @@ var AI_difficulty_arr = ["Easy", "Normal", "Hard"];
 var AI_difficulty_index = 0;
 
 var Zoom_arr = ["70%", "80%", "90%", "100%",
-  "110%", "120%", "130%", "140%", "150%"];
+  "110%", "120%", "130%", "140%", "150%", "160%", "170%"];
 var Zoom_index = 3; // Default 100%
 
 
