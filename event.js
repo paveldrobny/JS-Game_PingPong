@@ -11,26 +11,36 @@ let canvas = document.getElementById("canvas"),
   textAI_Diff = document.getElementById("textAI_Diff"),
   mAI_Dif = document.getElementById("mAI_Dif"),
   pAI_Dif = document.getElementById("pAI_Dif"),
-  textZoom = document.getElementById("textZoom");
-mZoom = document.getElementById("mZoom"),
+  textZoom = document.getElementById("textZoom"),
+  mZoom = document.getElementById("mZoom"),
   pZoom = document.getElementById("pZoom"),
+  textBallSpeed = document.getElementById("textBallSpeed"),
+  mBallSpeed = document.getElementById("mBallSpeed"),
+  pBallSpeed = document.getElementById("pBallSpeed"),
+  textStatGame = document.getElementById("textStatGame"),
+  mStatGame = document.getElementById("mStatGame"),
+  pStatGame = document.getElementById("pStatGame");
 
-
-  canvas.width = 860;
-canvas.height = 560;
+canvas.width = 880;
+canvas.height = 580;
 
 var AI_Pos = canvas.height / 2 - 41;
 
-var MatchType_arr = ["Local", "AI", "Spectator"];
-var matchType_index = 0;
+var x_ballSpeed = 4,
+  y_ballSpeed = x_ballSpeed * -1;
 
-var AI_difficulty_arr = ["Easy", "Normal", "Hard"];
-var AI_difficulty_index = 0;
+var MatchType_arr = ["Local", "AI", "Spectator"],
+  AI_difficulty_arr = ["Easy", "Normal", "Hard"],
+  Zoom_arr = ["80%", "90%", "100%",
+    "110%", "120%", "130%", "140%", "150%", "160%", "170%", "180%"],
+  BallSpeed_arr = ["Normal", "1.2x", "1.4x", "1.6x", "1.8x", "2x"],
+  MatchStats_arr = ["OFF", "ON"];
 
-var Zoom_arr = ["70%", "80%", "90%", "100%",
-  "110%", "120%", "130%", "140%", "150%", "160%", "170%"];
-var Zoom_index = 3; // Default 100%
-
+var matchType_index = 0,
+  AI_difficulty_index = 0,
+  Zoom_index = 2, // Default 100 zoom%
+  Ball_index = 0,
+  MatchStats_index = 0;
 
 //#region INIT
 let player1 = new Player(15, AI_Pos, "green");
@@ -39,7 +49,6 @@ let ball = new Ball(canvas.width / 2, canvas.height / 2, 10, "gray");
 let input = new Input();
 let gameM = new GameManager();
 let ui = new UI();
-textScore.innerHTML = gameM.scoreToEnd;
 //#endregion
 
 
@@ -69,8 +78,6 @@ Player.prototype.move = function () {
 function Ball(x, y, r, color) {
   this.x = x;
   this.y = y;
-  xS = 4;
-  yS = -4;
   this.r = r;
   this.color = color;
 }
@@ -85,21 +92,18 @@ Ball.prototype.draw = function () {
 
 Ball.prototype.move = function () {
   if (this.y > canvas.height - this.r || this.y < 0 + this.r) {
-    yS = -yS;
+    y_ballSpeed = -y_ballSpeed;
   }
-
   if (this.x > player1.x && this.x < player1.x + 10 && this.y > player1.y && this.y < player1.y + player1.h) {
-    xS = -xS;
+    x_ballSpeed = -x_ballSpeed;
   }
   if (this.x > player2.x && this.x < player2.x + 10 && this.y > player2.y && this.y < player2.y + player2.h) {
-    xS = -xS;
+    x_ballSpeed = -x_ballSpeed;
   }
   if (gameM.gameStart && gameM.gameEnd == false) {
-    this.x += xS;
-    this.y += yS;
+    this.x += x_ballSpeed;
+    this.y += y_ballSpeed;
   }
-  console.log("GS " + gameM.gameStart)
-  console.log("GE " + gameM.gameEnd)
 }
 
 Ball.prototype.restart = function () {
@@ -217,7 +221,7 @@ GameManager.prototype.addScore = function () {
     ui.winPlayer();
     ui.message("Press the Spacebar to return to the menu.");
   } else {
-    // Else UI
+    ui.remainingScore();
   }
 }
 
@@ -225,14 +229,12 @@ GameManager.prototype.addScore = function () {
 GameManager.prototype.mScoreToEnd = function () {
   if (gameM.scoreToEnd > 2) {
     gameM.scoreToEnd -= 2;
-    textScore.innerHTML = gameM.scoreToEnd;
   }
 }
 
 GameManager.prototype.pScoreToEnd = function () {
   if (gameM.scoreToEnd < 100) {
     gameM.scoreToEnd += 2;
-    textScore.innerHTML = gameM.scoreToEnd;
   }
 }
 
@@ -242,7 +244,6 @@ GameManager.prototype.mMatchType = function () {
   } else {
     matchType_index--;
   }
-  textMatchType.innerHTML = MatchType_arr[matchType_index];
 }
 
 GameManager.prototype.pMatchType = function () {
@@ -251,7 +252,6 @@ GameManager.prototype.pMatchType = function () {
   } else {
     matchType_index++;
   }
-  textMatchType.innerHTML = MatchType_arr[matchType_index];
 }
 
 GameManager.prototype.mAI_Dif = function () {
@@ -260,7 +260,6 @@ GameManager.prototype.mAI_Dif = function () {
   } else {
     AI_difficulty_index--;
   }
-  textAI_Diff.innerHTML = AI_difficulty_arr[AI_difficulty_index];
 }
 
 GameManager.prototype.pAI_Dif = function () {
@@ -269,7 +268,6 @@ GameManager.prototype.pAI_Dif = function () {
   } else {
     AI_difficulty_index++;
   }
-  textAI_Diff.innerHTML = AI_difficulty_arr[AI_difficulty_index];
 }
 
 GameManager.prototype.mZoom = function () {
@@ -278,8 +276,6 @@ GameManager.prototype.mZoom = function () {
   } else {
     Zoom_index--;
   }
-  textZoom.innerHTML = Zoom_arr[Zoom_index];
-  document.body.style.zoom = Zoom_arr[Zoom_index];
 }
 
 GameManager.prototype.pZoom = function () {
@@ -288,21 +284,59 @@ GameManager.prototype.pZoom = function () {
   } else {
     Zoom_index++;
   }
-  textZoom.innerHTML = Zoom_arr[Zoom_index];
-  document.body.style.zoom = Zoom_arr[Zoom_index];
 }
 
+GameManager.prototype.mBallSpeed = function () {
+  if (Ball_index <= 0) {
+    Ball_index = 0
+  } else {
+    Ball_index--;
+  }
+}
+
+GameManager.prototype.pBallSpeed = function () {
+  if (Ball_index >= BallSpeed_arr.length - 1) {
+    Ball_index = BallSpeed_arr.length - 1;
+  } else {
+    Ball_index++;
+  }
+}
+
+GameManager.prototype.mStatGame = function () {
+  if (MatchStats_index <= 0) {
+    MatchStats_index = 0
+  } else {
+    MatchStats_index--;
+  }
+}
+
+GameManager.prototype.pStatGame = function () {
+  if (MatchStats_index >= MatchStats_arr.length - 1) {
+    MatchStats_index = MatchStats_arr.length - 1;
+  } else {
+    MatchStats_index++;
+  }
+}
 
 GameManager.prototype.startGame = function () {
   gameM.gameStart = true;
   menu.style.display = "none";
 }
 
+GameManager.prototype.checkScoreToWin = function () {
+  a = this.p1Score;
+  b = this.p2Score;
+  if (a > b) return `Player 1 needs ${this.scoreToEnd - a} scores to win`;
+  else if (a < b) return `Player 2 needs ${this.scoreToEnd - b} scores to win`;
+  else return `Both Player needs ${this.scoreToEnd - a} scores to win`
+}
+
 GameManager.prototype.endGame = function () {
   a = this.p1Score;
   b = this.p2Score;
   if (a > b) return "Player 1";
-  else return "Player 2";
+  else if (a < b) return "Player 2";
+  else return "Player 1's score is equal to Player 2's"
 }
 
 GameManager.prototype.AI = function () {
@@ -361,11 +395,47 @@ UI.prototype.message = function (mess) {
   context.textAlign = 'center';
   context.fillText(mess, x / 2, y - 26);
 }
+
+UI.prototype.remainingScore = function () {
+  context.font = '19px sans-serif';
+  context.fillStyle = 'rgba(144, 144, 144, 0.8)';
+  context.textAlign = 'center';
+  context.fillText(gameM.checkScoreToWin(), x / 2, y - 26);
+}
+
+UI.prototype.GameStats = function () {
+  context.font = '15px sans-serif';
+  context.fillStyle = 'rgba(144, 144, 144, 0.35)';
+  context.textAlign = 'left';
+  context.fillText("Ball speed: " + BallSpeed_arr[Ball_index], 10, 20);
+  context.fillText("Match type: " + MatchType_arr[matchType_index], 10, 41);
+}
+
+UI.prototype.GameStats1 = function () {
+  context.font = '15px sans-serif';
+  context.fillStyle = 'rgba(144, 144, 144, 0.35)';
+  context.textAlign = 'right';
+  context.fillText("AI difficulty (if active): " + AI_difficulty_arr[AI_difficulty_index], x - 10, 20);
+  context.fillText("Game window zoom: " + Zoom_arr[Zoom_index], x - 10, 41);
+}
+
+UI.prototype.GameStats2 = function () {
+  context.font = '15px sans-serif';
+  context.fillStyle = 'rgba(144, 144, 144, 0.35)';
+  context.textAlign = 'left';
+  context.fillText("Player 1 y-pos: " + player1.y, 10, y - 15);
+}
+
+UI.prototype.GameStats3 = function () {
+  context.font = '15px sans-serif';
+  context.fillStyle = 'rgba(144, 144, 144, 0.35)';
+  context.textAlign = 'right';
+  context.fillText("Player 2 y-pos:  " + player2.y, x - 10, y - 15);
+}
+
 //#endregion 
 
-
 //#region EVENTS 
-
 
 window.addEventListener("keydown", input.keyDown);
 window.addEventListener("keyup", input.keyUp);
@@ -378,6 +448,10 @@ mAI_Dif.addEventListener("click", gameM.mAI_Dif);
 pAI_Dif.addEventListener("click", gameM.pAI_Dif);
 mZoom.addEventListener("click", gameM.mZoom);
 pZoom.addEventListener("click", gameM.pZoom);
+mBallSpeed.addEventListener("click", gameM.mBallSpeed);
+pBallSpeed.addEventListener("click", gameM.pBallSpeed);
+mStatGame.addEventListener("click", gameM.mStatGame);
+pStatGame.addEventListener("click", gameM.pStatGame);
 
 //#endregion
 
@@ -396,9 +470,23 @@ function gameLoop() {
     gameM.area();
     gameM.addScore();
     ui.score();
+    if (MatchStats_index == 1) {
+      ui.GameStats();
+      ui.GameStats1();
+      ui.GameStats2();
+      ui.GameStats3();
+    }
   }
   if (!gameM.gameStart) {
     menu.style.display = "block";
+    textScore.innerHTML = gameM.scoreToEnd;
+    textMatchType.innerHTML = MatchType_arr[matchType_index];
+    textAI_Diff.innerHTML = AI_difficulty_arr[AI_difficulty_index];
+    textZoom.innerHTML = Zoom_arr[Zoom_index];
+    document.body.style.zoom = Zoom_arr[Zoom_index];
+    textBallSpeed.innerHTML = BallSpeed_arr[Ball_index];
+    textStatGame.innerHTML = MatchStats_arr[MatchStats_index];
+    x_ballSpeed = Ball_index + 5;
   }
   requestAnimationFrame(gameLoop);
 }

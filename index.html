@@ -17,35 +17,52 @@
 <body>
     <div id="menu">
         <div id="title">PING PONG on JS</div>
-        <div id="menuCont">
-            <label>Score to win: 2 - 100</label>
-            <div class="selectorContent">
-                <div class="selector_leftBtn" id="mScore"><i class="fas fa-angle-left"></i></div>
-                <div class="selector_text" id="textScore">2</div>
-                <div class="selector_rightBtn" id="pScore"><i class="fas fa-angle-right"></i></div>
+        <div id="mainMenuCont">
+            <div id="menuCont">
+                <div class="cont_title">Match settings</div>
+                <label>Score to win: 2 - 100</label>
+                <div class="selectorContent">
+                    <div class="selector_leftBtn" id="mScore"><i class="fas fa-angle-left"></i></div>
+                    <div class="selector_text" id="textScore">2</div>
+                    <div class="selector_rightBtn" id="pScore"><i class="fas fa-angle-right"></i></div>
+                </div>
+                <label>Ball speed: 1.0x - 2.0x</label>
+                <div class="selectorContent">
+                    <div class="selector_leftBtn" id="mBallSpeed"><i class="fas fa-angle-left"></i></div>
+                    <div class="selector_text" id="textBallSpeed">1x</div>
+                    <div class="selector_rightBtn" id="pBallSpeed"><i class="fas fa-angle-right"></i></div>
+                </div>
+                <label>Match type: Local, AI, Spectator</label>
+                <div class="selectorContent">
+                    <div class="selector_leftBtn" id="mMatchType"><i class="fas fa-angle-left"></i></div>
+                    <div class="selector_text" id="textMatchType">Local</div>
+                    <div class="selector_rightBtn" id="pMatchType"><i class="fas fa-angle-right"></i></div>
+                </div>
+                <label>AI difficulty: Easy, Normal, Hard</label>
+                <div class="selectorContent">
+                    <div class="selector_leftBtn" id="mAI_Dif"><i class="fas fa-angle-left"></i></div>
+                    <div class="selector_text" id="textAI_Diff">Easy</div>
+                    <div class="selector_rightBtn" id="pAI_Dif"><i class="fas fa-angle-right"></i></div>
+                </div>
             </div>
-            <label>Match type: Local, AI, Spectator</label>
-            <div class="selectorContent">
-                <div class="selector_leftBtn" id="mMatchType"><i class="fas fa-angle-left"></i></div>
-                <div class="selector_text" id="textMatchType">Local</div>
-                <div class="selector_rightBtn" id="pMatchType"><i class="fas fa-angle-right"></i></div>
+            <div id="menuCont">
+                <div class="cont_title">Game settings</div>
+                <label>Game window zoom: 80% - 180%</label>
+                <div class="selectorContent">
+                    <div class="selector_leftBtn" id="mZoom"><i class="fas fa-angle-left"></i></div>
+                    <div class="selector_text" id="textZoom">100%</div>
+                    <div class="selector_rightBtn" id="pZoom"><i class="fas fa-angle-right"></i></div>
+                </div>
+                <label>Match stats in game</label>
+                <div class="selectorContent">
+                    <div class="selector_leftBtn" id="mStatGame"><i class="fas fa-angle-left"></i></div>
+                    <div class="selector_text" id="textStatGame">OFF</div>
+                    <div class="selector_rightBtn" id="pStatGame"><i class="fas fa-angle-right"></i></div>
+                </div>
             </div>
-            <label>AI difficulty: Easy, Normal, Hard</label>
-            <div class="selectorContent">
-                <div class="selector_leftBtn" id="mAI_Dif"><i class="fas fa-angle-left"></i></div>
-                <div class="selector_text" id="textAI_Diff">Easy</div>
-                <div class="selector_rightBtn" id="pAI_Dif"><i class="fas fa-angle-right"></i></div>
-            </div>
-            <button class="menuBtn" id="startBtn">Start Game</button>
         </div>
-
-        <div id="window_Settings">
-            <label>Window scale: 70% - 170%</label>
-            <div class="settingsContent">
-                <div class="selector_leftBtn" id="mZoom"><i class="fas fa-angle-left"></i></div>
-                <div class="settings_text" id="textZoom">100%</div>
-                <div class="selector_rightBtn" id="pZoom"><i class="fas fa-angle-right"></i></div>
-            </div>
+        <div id="startMatch_cont">
+            <button id="startBtn">Start Game</button>
         </div>
     </div>
     <canvas id="canvas"></canvas>
