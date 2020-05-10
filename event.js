@@ -1,6 +1,7 @@
 let canvas = document.getElementById("canvas"),
   context = canvas.getContext("2d"),
   mainMenu = document.getElementById("menu"),
+  timerB = document.getElementById("timer"),
   startBtn = document.getElementById("startBtn"),
   textScore = document.getElementById("textScore"),
   mScore = document.getElementById("mScore"),
@@ -26,6 +27,9 @@ canvas.height = 580;
 
 var AI_Pos = canvas.height / 2 - 41;
 
+var g_sec = 0,
+  g_min = 0;
+
 var x_ballSpeed = 4,
   y_ballSpeed = x_ballSpeed * -1;
 
@@ -40,7 +44,8 @@ var matchType_index = 0,
   AI_difficulty_index = 0,
   Zoom_index = 2, // Default 100 zoom%
   Ball_index = 0,
-  MatchStats_index = 0;
+  MatchStats_index = 0,
+  ScoreToEndV = 2;
 
 //#region INIT
 let player1 = new Player(15, AI_Pos, "green");
@@ -225,6 +230,28 @@ GameManager.prototype.addScore = function () {
   }
 }
 
+GameManager.prototype.matchTimer = function () {
+  let timer_Min = document.getElementById("timer_Min"),
+    timer_Sec = document.getElementById("timer_Sec");
+  if (!gameM.gameEnd) {
+    g_sec++;
+    if (g_sec >= 60) {
+      g_sec = 0;
+      g_min += 1;
+    }
+    if (g_sec < 10) {
+      timer_Sec.innerHTML = "0" + g_sec;
+    } else {
+      timer_Sec.innerHTML = g_sec;
+    }
+    if (g_min < 10) {
+      timer_Min.innerHTML = "0" + g_min;
+    } else {
+      timer_Min.innerHTML = g_min;
+    }
+  }
+}
+
 // UI SELECTOR 
 GameManager.prototype.mScoreToEnd = function () {
   if (gameM.scoreToEnd > 2) {
@@ -275,7 +302,9 @@ GameManager.prototype.mZoom = function () {
     Zoom_index = 0
   } else {
     Zoom_index--;
+    store();
   }
+
 }
 
 GameManager.prototype.pZoom = function () {
@@ -283,7 +312,9 @@ GameManager.prototype.pZoom = function () {
     Zoom_index = Zoom_arr.length - 1;
   } else {
     Zoom_index++;
+    store();
   }
+
 }
 
 GameManager.prototype.mBallSpeed = function () {
@@ -307,6 +338,7 @@ GameManager.prototype.mStatGame = function () {
     MatchStats_index = 0
   } else {
     MatchStats_index--;
+    store();
   }
 }
 
@@ -315,12 +347,15 @@ GameManager.prototype.pStatGame = function () {
     MatchStats_index = MatchStats_arr.length - 1;
   } else {
     MatchStats_index++;
+    store();
   }
 }
 
 GameManager.prototype.startGame = function () {
   gameM.gameStart = true;
   menu.style.display = "none";
+  timerB.style.display = "block";
+  setInterval(gameM.matchTimer, 1000);
 }
 
 GameManager.prototype.checkScoreToWin = function () {
@@ -379,7 +414,14 @@ UI.prototype.score = function () {
   context.font = '27px sans-serif';
   context.fillStyle = 'white';
   context.textAlign = 'center';
-  context.fillText(gameM.p1Score + " : " + gameM.p2Score, x / 2, 35);
+  context.fillText(gameM.p1Score + " : " + gameM.p2Score, x / 2, 30);
+}
+
+UI.prototype.timer = function () {
+  context.font = '18px sans-serif';
+  context.fillStyle = 'gray';
+  context.textAlign = 'center';
+  context.fillText(g_min + ":" + g_sec, x / 2, 55);
 }
 
 UI.prototype.winPlayer = function () {
@@ -470,6 +512,7 @@ function gameLoop() {
     gameM.area();
     gameM.addScore();
     ui.score();
+
     if (MatchStats_index == 1) {
       ui.GameStats();
       ui.GameStats1();
@@ -479,6 +522,7 @@ function gameLoop() {
   }
   if (!gameM.gameStart) {
     menu.style.display = "block";
+    timerB.style.display = "none";
     textScore.innerHTML = gameM.scoreToEnd;
     textMatchType.innerHTML = MatchType_arr[matchType_index];
     textAI_Diff.innerHTML = AI_difficulty_arr[AI_difficulty_index];
@@ -492,3 +536,31 @@ function gameLoop() {
 }
 
 gameLoop();
+
+
+
+function store() {
+  localStorage.ZoomIndex = Zoom_index;
+  localStorage.MatchStats = MatchStats_index;
+}
+
+function getValue() {
+  var ZoomValue = localStorage.ZoomIndex,
+    MatchStatsValue = localStorage.MatchStats;
+
+  // LOAD ZOOM SETTINGS
+  if (!ZoomValue) {
+    Zoom_index = 2; // Default 100%
+  } else {
+    Zoom_index = ZoomValue;
+  }
+  // LOAD MATCH STATS
+  if (!MatchStatsValue) {
+    MatchStats_index = 0; // Default OFF
+  } else {
+    MatchStats_index = MatchStatsValue;
+  }
+
+}
+
+getValue();
