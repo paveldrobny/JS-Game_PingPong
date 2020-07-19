@@ -4,6 +4,7 @@ let canvas = document.getElementById("canvas"),
   mainMenu = document.getElementById("menu"),
   timerB = document.getElementById("timer"),
   startBtn = document.getElementById("startBtn"),
+  exitBtn = document.getElementById("exitBtn"),
   textScore = document.getElementById("textScore"),
   mScore = document.getElementById("mScore"),
   pScore = document.getElementById("pScore"),
@@ -495,6 +496,7 @@ mBallSpeed.addEventListener("click", gameM.mBallSpeed);
 pBallSpeed.addEventListener("click", gameM.pBallSpeed);
 mStatGame.addEventListener("click", gameM.mStatGame);
 pStatGame.addEventListener("click", gameM.pStatGame);
+exitBtn.onclick = function () { window.close(); }
 
 //#endregion
 

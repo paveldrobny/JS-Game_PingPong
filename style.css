@@ -109,8 +109,10 @@ button {
 }
 
 #startMatch_cont {
+  display: flex;
   position: absolute;
-  width: 250px;
+  width: 440px;
+  margin: 0 15px;
   left: 50%;
   bottom: 0;
   transform: translateX(-50%);
@@ -121,14 +123,29 @@ button {
   transition: .15s;
   color: white;
   font-size: 21px;
-  width: 100%;
+  width: 210px;
   height: 50px;
-  margin: 5px 0;
+  margin: 0 10px;
   background: rgb(46, 46, 46);
 }
 
 #startBtn:hover {
   border: 3px solid rgb(83, 255, 44);
+}
+
+#exitBtn {
+  outline: none;
+  transition: .15s;
+  color: white;
+  font-size: 21px;
+  width: 210px;
+  height: 50px;
+  margin: 0 10px;
+  background: rgb(46, 46, 46);
+}
+
+#exitBtn:hover {
+  border: 3px solid rgb(255, 40, 40);
 }
 
 #timer {
