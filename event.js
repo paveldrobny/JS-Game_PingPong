@@ -145,7 +145,7 @@ Ball.prototype.draw = function () {
 }
 
 Ball.prototype.move = function () {
-  if (this.y > CANVAS_HEIGHT - this.r || this.y < 0 + this.r) {
+  if (this.y > HEIGHT - this.r || this.y < 0 + this.r) {
     y_ballSpeed = -y_ballSpeed;
   }
   if (this.x > player1.x && this.x < player1.x + 10 && this.y > player1.y && this.y < player1.y + player1.h) {
