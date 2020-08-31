@@ -24,10 +24,57 @@ let canvas = document.getElementById("canvas"),
   mStatGame = document.getElementById("mStatGame"),
   pStatGame = document.getElementById("pStatGame");
 
-canvas.width = 880;
-canvas.height = 580;
 
-var AI_Pos = canvas.height / 2 - 41;
+////////////////////////////////////////////////
+  var WIDTH = 640;
+  var HEIGHT = 360;
+  var CANVAS_WIDTH = 640;
+  var CANVAS_HEIGHT = 360;
+  
+  let resizeCanvas = function () {
+    CANVAS_WIDTH = window.innerWidth;
+    CANVAS_HEIGHT = window.innerHeight;
+  
+    let ratio = 16 / 9;
+    if (CANVAS_HEIGHT < CANVAS_WIDTH / ratio)
+      CANVAS_WIDTH = CANVAS_HEIGHT * ratio;
+    else CANVAS_HEIGHT = CANVAS_WIDTH / ratio;
+  
+    canvas.width = WIDTH;
+    canvas.height = HEIGHT;
+
+    context.mozImageSmoothingEnabled = true;
+    context.webkitImageSmoothingEnabled = true;
+    context.msImageSmoothingEnabled = true;
+    context.imageSmoothingEnabled = true;
+  
+    canvas.style.width = "" + CANVAS_WIDTH + "px";
+    canvas.style.height = "" + CANVAS_HEIGHT + "px";
+  };
+  
+  resizeCanvas();
+  
+  window.addEventListener("resize", function () {
+    resizeCanvas();
+  });
+  //////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+// canvas.width = 880;
+// canvas.height = 580;
+
+var AI_Pos = HEIGHT / 2 - 41;
 
 var g_sec = 0,
   g_min = 0;
@@ -51,8 +98,8 @@ var matchType_index = 0,
 
 //#region INIT
 let player1 = new Player(15, AI_Pos, "green");
-let player2 = new Player(canvas.width - 25, AI_Pos, "red");
-let ball = new Ball(canvas.width / 2, canvas.height / 2, 10, "gray");
+let player2 = new Player(WIDTH - 25, AI_Pos, "red");
+let ball = new Ball(WIDTH / 2, HEIGHT / 2, 10, "gray");
 let input = new Input();
 let gameM = new GameManager();
 let ui = new UI();
@@ -98,7 +145,7 @@ Ball.prototype.draw = function () {
 }
 
 Ball.prototype.move = function () {
-  if (this.y > canvas.height - this.r || this.y < 0 + this.r) {
+  if (this.y > CANVAS_HEIGHT - this.r || this.y < 0 + this.r) {
     y_ballSpeed = -y_ballSpeed;
   }
   if (this.x > player1.x && this.x < player1.x + 10 && this.y > player1.y && this.y < player1.y + player1.h) {
@@ -114,8 +161,8 @@ Ball.prototype.move = function () {
 }
 
 Ball.prototype.restart = function () {
-  this.x = canvas.width / 2;
-  this.y = canvas.height / 2;
+  this.x = WIDTH / 2;
+  this.y = HEIGHT / 2;
 }
 //#endregion
 
@@ -190,9 +237,9 @@ Input.prototype.keyDetect = function (e) {
 //#region GAME MANAGER
 function GameManager() {
   leftW = 0;
-  rightW = canvas.width;
+  rightW = WIDTH;
   topH = 0;
-  bottomH = canvas.height;
+  bottomH = HEIGHT;
   this.p1Score = 0;
   this.p2Score = 0;
   this.scoreToEnd = 2;
@@ -408,8 +455,8 @@ GameManager.prototype.AI = function () {
 
 //#region UI 
 function UI() {
-  x = canvas.width;
-  y = canvas.height;
+  x = WIDTH;
+  y = HEIGHT;
 }
 
 UI.prototype.score = function () {
@@ -502,7 +549,7 @@ exitBtn.onclick = function () { window.close(); }
 
 
 function gameLoop() {
-  context.clearRect(0, 0, canvas.width, canvas.height);
+  context.clearRect(0, 0, WIDTH, HEIGHT);
   if (gameM.gameStart) {
     player1.draw();
     player2.draw();
@@ -567,3 +614,8 @@ function getValue() {
 }
 
 getValue();
+
+
+
+
+
