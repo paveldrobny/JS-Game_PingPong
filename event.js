@@ -24,10 +24,10 @@ let canvas = document.getElementById("canvas"),
   mStatGame = document.getElementById("mStatGame"),
   pStatGame = document.getElementById("pStatGame");
 
-var WIDTH = 880;
-var HEIGHT = 580;
-var CANVAS_WIDTH = 880;
-var CANVAS_HEIGHT = 580;
+var WIDTH = 880,
+  HEIGHT = 580,
+  CANVAS_WIDTH = 880,
+  CANVAS_HEIGHT = 580;
 
 //// UNCOMMENT TO ENABLE ASPECT RATIO
 
@@ -117,6 +117,7 @@ Player.prototype.draw = function () {
   context.fillStyle = this.color;
   context.fillRect(this.x, this.y, this.w, this.h);
 };
+
 Player.prototype.move = function () {
   this.x++;
 };

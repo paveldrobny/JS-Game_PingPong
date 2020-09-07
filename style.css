@@ -167,3 +167,28 @@ button {
   letter-spacing: 1px;
   color: rgba(212, 20, 20, .9);
 }
+
+#infoKeyboard {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 880px;
+  transform: translate(-50%, 310px);
+}
+
+#infoKeyboard-left, #infoKeyboard-right {
+  display: inline;
+  padding: 6px 12px;
+  color: white;
+  font-size: 18px;
+  background: rgba(8, 8, 8, 0.35);
+}
+
+#infoKeyboard-left {
+  border-left: 3px solid rgba(0, 153, 255, 0.7);
+}
+
+#infoKeyboard-right {
+  float: right;
+  border-right: 3px solid rgba(0, 153, 255, 0.7);
+}
