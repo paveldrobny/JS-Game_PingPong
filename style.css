@@ -90,7 +90,7 @@ button {
   transition: .15s;
   color: white;
   font-size: 20px;
-  height: 77px;
+  height: 63px;
   margin: 8px;
   letter-spacing: 1px;
   outline: 2px solid rgb(65, 65, 65);
@@ -100,7 +100,7 @@ button {
 .ui-button-panel-menu.start {
   font-size: 45px;
   letter-spacing: 5px;
-  height: 263px;
+  height: 300px;
 }
 
 .ui-button-panel-menu.start:hover {
@@ -116,6 +116,13 @@ button {
 .ui-button-panel-menu.exit:hover {
   box-shadow: inset 0 0 8px 2px rgba(255, 40, 40, .5);
   outline: 3px solid rgb(255, 40, 40);
+}
+
+
+.unavailable {
+  opacity: .2;
+  background: rgb(61, 0, 0);
+  outline: 2px solid rgb(184, 1, 1);
 }
 
 .other {
