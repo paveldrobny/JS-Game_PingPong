@@ -15,76 +15,141 @@
 </head>
 
 <body>
-    <div id="menu">
-        <div id="title">PING PONG on JS</div>
-        <div id="mainMenuCont">
-            <div id="menuCont">
-                <div class="cont_title">Match settings</div>
-                <label>Score to win: 2 - 100</label>
-                <div class="selectorContent">
-                    <div class="selector_leftBtn" id="mScore"><i class="fas fa-angle-left"></i></div>
-                    <div class="selector_text" id="textScore">2</div>
-                    <div class="selector_rightBtn" id="pScore"><i class="fas fa-angle-right"></i></div>
+    <div id="ui-menu">
+        <div id="ui-menu-title">PING PONG on JS</div>
+        <button id="ui-button-back" class="other"><i class="fas fa-angle-left"></i></button>
+        <div id="ui-menu-content">
+            <div id="ui-menu-panel-main" class="panel">
+                <div id="ui-menu-panel-main-left">
+                    <button id="ui-button-start" class="ui-button-panel-menu start">Play</button>
+                    <button id="ui-button-exit" class="ui-button-panel-menu exit">Exit</button>
                 </div>
-                <label>Ball speed: 1.0x - 2.0x</label>
-                <div class="selectorContent">
-                    <div class="selector_leftBtn" id="mBallSpeed"><i class="fas fa-angle-left"></i></div>
-                    <div class="selector_text" id="textBallSpeed">1x</div>
-                    <div class="selector_rightBtn" id="pBallSpeed"><i class="fas fa-angle-right"></i></div>
-                </div>
-                <label>Match type: Local, AI, Spectator</label>
-                <div class="selectorContent">
-                    <div class="selector_leftBtn" id="mMatchType"><i class="fas fa-angle-left"></i></div>
-                    <div class="selector_text" id="textMatchType">Local</div>
-                    <div class="selector_rightBtn" id="pMatchType"><i class="fas fa-angle-right"></i></div>
-                </div>
-                <label>AI difficulty: Easy, Normal, Hard (Beta)</label>
-                <div class="selectorContent">
-                    <div class="selector_leftBtn" id="mAI_Dif"><i class="fas fa-angle-left"></i></div>
-                    <div class="selector_text" id="textAI_Diff">Easy</div>
-                    <div class="selector_rightBtn" id="pAI_Dif"><i class="fas fa-angle-right"></i></div>
+                <div id="ui-menu-panel-main-right">
+                    <button id="ui-button-matchSettings" class="ui-button-panel-menu other">Match settings</button>
+                    <button id="ui-button-gameSettings" class="ui-button-panel-menu other">Game settings</button>
+                    <button id="ui-button-updateList" class="ui-button-panel-menu other">Update list</button>
+                    <button id="ui-button-sourceCode" class="ui-button-panel-menu other">Source code <br><span
+                            style="font-size: 15px;">(Redirect
+                            to GitHub)</span> </button>
                 </div>
             </div>
-            <div id="menuCont">
-                <div class="cont_title">Game settings</div>
-                <label>Game window zoom: 80% - 180%</label>
-                <div class="selectorContent">
-                    <div class="selector_leftBtn" id="mZoom"><i class="fas fa-angle-left"></i></div>
-                    <div class="selector_text" id="textZoom">100%</div>
-                    <div class="selector_rightBtn" id="pZoom"><i class="fas fa-angle-right"></i></div>
-                </div>
-                <label>Match stats in game</label>
-                <div class="selectorContent">
-                    <div class="selector_leftBtn" id="mStatGame"><i class="fas fa-angle-left"></i></div>
-                    <div class="selector_text" id="textStatGame">OFF</div>
-                    <div class="selector_rightBtn" id="pStatGame"><i class="fas fa-angle-right"></i></div>
-                </div>
-            </div>
-        </div>
+            <div id="ui-menu-panel-matchSettings" class="panel hide-panel">
+                <div id="ui-menu-panel-matchSettings-content">
+                    <div class="ui-menu-panel-title">Match settings</div>
+                    <label>Score to win: 2 - 100 *</label>
+                    <div class="selector-content">
+                        <div class="selector-button-left" id="ui-button-score-minus"><i class="fas fa-angle-left"></i>
+                        </div>
+                        <div class="selector-text" id="ui-text-score">2</div>
+                        <div class="selector-button-right" id="ui-button-score-plus"><i class="fas fa-angle-right"></i>
+                        </div>
+                    </div>
+                    <label>Movement speed: 1.0x - 2.0x *</label>
+                    <div class="selector-content">
+                        <div class="selector-button-left" id="ui-button-movement-minus"><i
+                                class="fas fa-angle-left"></i>
+                        </div>
+                        <div class="selector-text" id="ui-text-movementSpeed">1x</div>
+                        <div class="selector-button-right" id="ui-button-movement-plus"><i
+                                class="fas fa-angle-right"></i>
+                        </div>
+                    </div>
+                    <label>Match type: Local, AI, Spectator</label>
+                    <div class="selector-content">
+                        <div class="selector-button-left" id="ui-button-matchType-minus"><i
+                                class="fas fa-angle-left"></i>
+                        </div>
+                        <div class="selector-text" id="ui-text-matchType">Local</div>
+                        <div class="selector-button-right" id="ui-button-matchType-plus"><i
+                                class="fas fa-angle-right"></i>
+                        </div>
+                    </div>
+                    <label>AI difficulty: Easy, Normal, Hard (Beta)</label>
+                    <div class="selector-content">
+                        <div class="selector-button-left" id="ui-button-difficultyAI-minus"><i
+                                class="fas fa-angle-left"></i></div>
+                        <div class="selector-text" id="ui-text-difficultyAI">Easy</div>
+                        <div class="selector-button-right" id="ui-button-difficultyAI-plus"><i
+                                class="fas fa-angle-right"></i></div>
+                    </div>
 
-        <div id="mess">Game settings are stored in Local storage.</div>
-        <div id="startMatch_cont">
-            <button id="startBtn">Start Game</button>
-            <button id="exitBtn">Exit Game</button>
+                </div>
+                <div class="message">* — settings are stored in Local storage.</div>
+            </div>
+
+            <div id="ui-menu-panel-gameSettings" class="panel hide-panel">
+                <div id="ui-menu-panel-gameSettings-content">
+                    <div class="ui-menu-panel-title">Game settings</div>
+                    <label>Window zoom: 80% - 185% *</label>
+                    <div class="selector-content">
+                        <div class="selector-button-left" id="ui-button-windowZoom-minus"><i
+                                class="fas fa-angle-left"></i>
+                        </div>
+                        <div class="selector-text" id="ui-text-windowZoom">null</div>
+                        <div class="selector-button-right" id="ui-button-windowZoom-plus"><i
+                                class="fas fa-angle-right"></i>
+                        </div>
+                    </div>
+                    <!-- <label>Show keyboard helper *</label>
+                    <div class="selector-content">
+                        <div class="selector-button-left" id="ui-button-windowZoom-minus"><i
+                                class="fas fa-angle-left"></i>
+                        </div>
+                        <div class="selector-text" id="ui-text-windowZoom">null</div>
+                        <div class="selector-button-right" id="ui-button-windowZoom-plus"><i
+                                class="fas fa-angle-right"></i>
+                        </div>
+                    </div> -->
+                </div>
+                <div class="message">* — settings are stored in Local storage.</div>
+            </div>
+
+            <div id="ui-menu-panel-updateList" class="panel hide-panel">
+                <div id="ui-menu-panel-updateList-content">
+                    <div class="ui-menu-panel-title">Update list</div>
+                    <div id="updateList-scroll">
+                        <div class="update-block">
+                            <div class="update-block-title">NEW UI - 13.02.2022</div>
+                            <div class="update-block-text">
+                                Settings are divided into separate sections for greater convenience.</div>
+                        </div>
+                        <div class="update-block">
+                            <div class="update-block-title">COUNTDOWN TIMER - 12.02.2022</div>
+                            <div class="update-block-text">
+                                Before the ball starts moving, you have 3 seconds to prepare.</div>
+                        </div>
+                        <div class="update-block">
+                            <div class="update-block-title">FIX PROBLEMS - 12.02.2022</div>
+                            <div class="update-block-text">
+                                Minor issues have been fixed, some mechanics have been reworked.</div>
+                        </div>
+                        <div class="update-block">
+                            <div class="update-block-title">FIX PROBLEMS - 12.02.2022</div>
+                            <div class="update-block-text">
+                                Minor issues have been fixed, some mechanics have been reworked.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div id="timer">
-        <div id="timer_val">
-            <div id="timer_Min">00</div> 
-            <div id="val">:</div> 
-            <div id="timer_Sec">00</div> 
-        </div>
+    <div id="ui-timer">
+        <div id="ui-text-timer">00:00</div>
     </div>
 
-    <div id="infoKeyboard">
-       <div id="infoKeyboard-left">Player 1: W,S</div>
-       <div id="infoKeyboard-right">Player 2: Arrow Up, Arrow Down</div>
+    <div id="ui-countdown">
+        <div id="ui-text-countdown">3</div>
+    </div>
+
+    <div id="keyboard-help">
+        <div id="keyboard-help-left">Player 1: W,S</div>
+        <div id="keyboard-help-right">Player 2: Arrow Up, Arrow Down</div>
     </div>
 
     <canvas id="canvas"></canvas>
 
-    <script src="event.js"></script>
+    <script src="index.js"></script>
 </body>
 
 </html>

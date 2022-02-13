@@ -10,7 +10,7 @@ body, html {
   border: 1px solid #a0a0a0;
 }
 
-#canvas, #menu {
+#canvas, #ui-menu {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -20,18 +20,19 @@ body, html {
 button {
   outline: none;
   cursor: pointer;
-  border: 1px solid rgb(109, 109, 109)
+  border: none;
 }
 
-#menu {
+/* UI */
+#ui-menu {
   display: block;
   pointer-events: all;
   z-index: 999;
-  width: 850px;
-  height: 550px;
+  width: 860px;
+  height: 560px;
 }
 
-#title {
+#ui-menu-title {
   position: relative;
   text-align: center;
   font-size: 41px;
@@ -39,23 +40,93 @@ button {
   color: white;
 }
 
-#mainMenuCont {
+#ui-button-back {
   position: absolute;
-  top: 75px;
-  width: 690px;
+  display: none;
+  top: 0;
+  width: 35px;
+  height: 35px;
+  transition: .15s;
+  background: rgb(46, 46, 46);
+}
+
+#ui-button-back>.fa-angle-left {
+  font-size: 30px;
+  padding-right: 1px;
+  color: white;
+}
+
+#ui-menu-content {
+  position: absolute;
+  top: 100px;
+  width: 670px;
   left: 50%;
   opacity: 1;
   transform: translateX(-50%);
 }
 
-#menuCont {
-  float: left;
+#ui-menu-panel-main, #ui-menu-panel-matchSettings, #ui-menu-panel-gameSettings, #ui-menu-panel-updateList {
   position: relative;
-  margin: 0 15px;
-  width: 300px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.cont_title {
+#ui-menu-panel-matchSettings, #ui-menu-panel-gameSettings, #ui-menu-panel-updateList {
+  flex-wrap: wrap;
+}
+
+#ui-menu-panel-main-left, #ui-menu-panel-main-right {
+  width: 50%;
+}
+
+#ui-menu-panel-main-right {
+  text-align: right;
+}
+
+.ui-button-panel-menu {
+  width: 95%;
+  transition: .15s;
+  color: white;
+  font-size: 20px;
+  height: 77px;
+  margin: 8px;
+  letter-spacing: 1px;
+  outline: 2px solid rgb(65, 65, 65);
+  background: rgb(46, 46, 46);
+}
+
+.ui-button-panel-menu.start {
+  font-size: 45px;
+  letter-spacing: 5px;
+  height: 263px;
+}
+
+.ui-button-panel-menu.start:hover {
+  box-shadow: inset 0 0 8px 2px rgba(83, 255, 44, 0.5);
+  outline: 3px solid rgb(83, 255, 44);
+}
+
+.ui-button-panel-menu.exit {
+  font-size: 27px;
+  letter-spacing: 2px;
+}
+
+.ui-button-panel-menu.exit:hover {
+  box-shadow: inset 0 0 8px 2px rgba(255, 40, 40, .5);
+  outline: 3px solid rgb(255, 40, 40);
+}
+
+.other {
+  outline: 2px solid rgb(65, 65, 65);
+}
+
+.other:hover {
+  outline: 3px solid rgb(44, 139, 255);
+}
+
+.ui-menu-panel-title {
   color: white;
   text-align: center;
   font-size: 19px;
@@ -64,27 +135,30 @@ button {
   border-bottom: 1px solid gray;
 }
 
-#menuCont label {
+#ui-menu-content label {
+  position: relative;
+  width: 300px;
   font-size: 16px;
   color: white;
 }
 
-.selectorContent {
+/* SELECTOR */
+.selector-content {
   width: 100%;
   height: 42px;
   margin-top: 3px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   background: rgb(43, 43, 43);
 }
 
-.selector_leftBtn, .selector_text, .selector_rightBtn {
+.selector-button-left, .selector-text, .selector-button-right {
   float: left;
   height: 38px;
   line-height: 38px;
   color: white;
 }
 
-.selector_leftBtn, .selector_rightBtn {
+.selector-button-left, .selector-button-right {
   width: 38px;
   cursor: pointer;
   border: 2px solid transparent;
@@ -92,7 +166,7 @@ button {
   background: rgb(53, 53, 53);
 }
 
-.selector_leftBtn:hover, .selector_rightBtn:hover {
+.selector-button-left:hover, .selector-button-right:hover {
   border: 2px solid rgb(44, 139, 255);
 }
 
@@ -102,64 +176,33 @@ button {
   text-align: center;
 }
 
-.selector_text {
+.selector-text {
   width: 216px;
   font-size: 18px;
   transition: .3s;
   text-align: center;
 }
 
-#startMatch_cont {
-  display: flex;
+/* TIMER */
+#ui-timer {
   position: absolute;
-  width: 440px;
-  margin: 0 15px;
-  left: 50%;
-  bottom: 0;
-  transform: translateX(-50%);
-}
-
-#startBtn, #exitBtn {
-  outline: none;
-  transition: .15s;
-  color: white;
-  font-size: 21px;
-  width: 210px;
-  height: 50px;
-  margin: 0 10px;
-  background: rgb(46, 46, 46);
-}
-
-#startBtn:hover {
-  border: 3px solid rgb(83, 255, 44);
-}
-
-#exitBtn:hover {
-  border: 3px solid rgb(255, 40, 40);
-}
-
-#timer {
-  position: absolute;
+  display: none;
   z-index: 999;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -252px);
   color: rgb(163, 163, 163);
   letter-spacing: 1px;
 }
 
-#timer_val {
+#ui-text-timer {
+  padding-left: 2px;
+}
+
+/* MESSAGES */
+.message {
   position: relative;
-  top: -241px;
-}
-
-#timer_Min, #val, #timer_Sec {
-  float: left;
-}
-
-#mess {
-  position: absolute;
-  bottom: 70px;
+  bottom: -30px;
   width: 100%;
   height: 30px;
   text-align: center;
@@ -168,7 +211,8 @@ button {
   color: rgba(212, 20, 20, .9);
 }
 
-#infoKeyboard {
+/* KEYBOARD HELPER */
+#keyboard-help {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -176,19 +220,100 @@ button {
   transform: translate(-50%, 310px);
 }
 
-#infoKeyboard-left, #infoKeyboard-right {
+#keyboard-help-left, #keyboard-help-right {
   display: inline;
-  padding: 6px 12px;
+  padding: 5px 10px;
   color: white;
-  font-size: 18px;
+  font-size: 17px;
   background: rgba(8, 8, 8, 0.35);
 }
 
-#infoKeyboard-left {
+#keyboard-help-left {
   border-left: 3px solid rgba(0, 153, 255, 0.7);
 }
 
-#infoKeyboard-right {
+#keyboard-help-right {
   float: right;
   border-right: 3px solid rgba(0, 153, 255, 0.7);
+}
+
+#ui-countdown {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 880px;
+  transform: translate(-50%, -50%);
+}
+
+#ui-text-countdown {
+  color: white;
+  text-align: center;
+  font-size: 10em;
+  animation-name: countdown-anim;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes countdown-anim {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  to {
+    transform: scale(1.3);
+    opacity: 0;
+  }
+}
+
+.hide-panel {
+  opacity: 0;
+  pointer-events: none;
+  height: 0;
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  border-radius: 3px;
+  background: rgba(68, 68, 68, 0.5);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+#updateList-scroll {
+  width: 500px;
+  height: 342px;
+  overflow: auto;
+  overflow-x: hidden;
+}
+
+
+.update-block {
+  width: calc(100% - 44px);
+  margin: 10px 10px 15px 10px;
+  padding: 10px;
+  color: rgb(240, 239, 239);
+  border: 2px solid rgb(90, 90, 90);
+  background: rgb(51, 51, 51);
+}
+
+.update-block-title {
+  font-weight: bold;
+  color: white;
+  border-bottom: 1px solid rgb(179, 179, 179);
+  margin-bottom: 7px;
 }
