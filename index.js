@@ -191,7 +191,17 @@ function getValue() {
     : (gameManager.scoreToEnd = ScoreToEndValue);
 
   // load window zoom
-  !ZoomValue ? (indexWindowZoom = 100) : (indexWindowZoom = ZoomValue);
+  if (!ZoomValue) {
+    indexWindowZoom = 100;
+  } else {
+    if (ZoomValue < 80) {
+      return (indexWindowZoom = 80);
+    }
+    if (ZoomValue > OPTIONS_VALUE_WINDOW_ZOOM_MAX) {
+      indexWindowZoom = OPTIONS_VALUE_WINDOW_ZOOM_MAX;
+    }
+    indexWindowZoom = ZoomValue;
+  }
 
   // load ball speed
   !MovementSpeedValue
@@ -596,7 +606,7 @@ UI_BUTTON_UPDATE_LIST.addEventListener("click", function () {
   switchPanel("updateList");
 });
 UI_BUTTON_SOURCE_CODE.addEventListener("click", function () {
-  open("https://github.com/paveldrobny/JS-Game_PingPong")
+  open("https://github.com/paveldrobny/JS-Game_PingPong");
 });
 UI_BUTTON_BACK.addEventListener("click", function () {
   switchPanel("main");

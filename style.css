@@ -299,6 +299,8 @@ button {
   height: 342px;
   overflow: auto;
   overflow-x: hidden;
+  scrollbar-color: #888 rgba(68, 68, 68, 0.5); /* For Firefox */
+  scrollbar-width: thin; /* For Firefox */
 }
 
 
