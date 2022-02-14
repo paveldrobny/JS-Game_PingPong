@@ -26,6 +26,9 @@ const UI_PANEL_UPDATE_LIST = document.getElementById(
   "ui-menu-panel-updateList"
 );
 
+//////// UI - SCROLL
+const UI_SCROLL_HISTORY_MATCH = document.getElementById("historyMatch-scroll-content");
+
 //////// UI - BUTTON
 const UI_BUTTON_START = document.getElementById("ui-button-start");
 const UI_BUTTON_EXIT = document.getElementById("ui-button-exit");
@@ -34,6 +37,9 @@ const UI_BUTTON_MATCH_SETTINGS = document.getElementById(
 );
 const UI_BUTTON_GAME_SETTINGS = document.getElementById(
   "ui-button-gameSettings"
+);
+const UI_BUTTON_HISTORY_MATCHES = document.getElementById(
+  "ui-button-historyMatches"
 );
 const UI_BUTTON_UPDATE_LIST = document.getElementById("ui-button-updateList");
 const UI_BUTTON_SOURCE_CODE = document.getElementById("ui-button-sourceCode");
@@ -178,12 +184,14 @@ function store() {
   localStorage.ScoreToEnd = gameManager.scoreToEnd;
   localStorage.ZoomIndex = indexWindowZoom;
   localStorage.MovementSpeed = indexMovementSpeed;
+  localStorage.HistoryMatches = UI_SCROLL_HISTORY_MATCH.innerHTML;
 }
 
 function getValue() {
   const ScoreToEndValue = parseInt(localStorage.ScoreToEnd);
   const ZoomValue = parseInt(localStorage.ZoomIndex);
   const MovementSpeedValue = parseInt(localStorage.MovementSpeed);
+  const HISTORY_MATCHES = localStorage.HistoryMatches;
 
   // load score to end
   !ScoreToEndValue
@@ -207,6 +215,10 @@ function getValue() {
   !MovementSpeedValue
     ? (indexMovementSpeed = 0)
     : (indexMovementSpeed = MovementSpeedValue);
+
+  !HISTORY_MATCHES
+    ? (UI_SCROLL_HISTORY_MATCH.innerHTML = "")
+    : (UI_SCROLL_HISTORY_MATCH.innerHTML = HISTORY_MATCHES);
 }
 //#endregion
 
@@ -331,6 +343,7 @@ function GameManager() {
   this.scoreToEnd = 2;
   this.isGameStarted = false;
   this.isGameEnded = false;
+  this.isHistorySaved = false;
 }
 
 GameManager.prototype.area = function () {
@@ -364,9 +377,31 @@ GameManager.prototype.addScore = function () {
     gameManager.isGameEnded = true;
     canvasUI.winPlayer();
     canvasUI.sendMessage("Press the Spacebar to return to the main menu.");
+    if(!this.isHistorySaved){
+      this.isHistorySaved = true;
+      this.historyMatches();
+      store();
+    }
   } else {
     canvasUI.remainingScore();
   }
+};
+
+GameManager.prototype.historyMatches = function () {
+  const UI_BLOCK_HISTORY_MATCH = document.createElement("div");
+  const UI_TITLE_HISTORY_MATCH = document.createElement("div");
+  const UI_TEXT_HISTORY_MATCH = document.createElement("div");
+  const HISTORY_TITLE = `${new Date().toLocaleString()}`;
+
+  UI_TITLE_HISTORY_MATCH.innerHTML = HISTORY_TITLE;
+  UI_TEXT_HISTORY_MATCH.innerHTML = `WINNER - ${this.endGame()} | Score - ${this.player1Score} : ${this.player2Score} | Time - ${gameMinutes}m : ${gameSeconds}s`;
+  UI_BLOCK_HISTORY_MATCH.classList.add("history-block");
+  UI_TITLE_HISTORY_MATCH.classList.add("history-title");
+  UI_TEXT_HISTORY_MATCH.classList.add("history-text");
+
+  UI_BLOCK_HISTORY_MATCH.appendChild(UI_TITLE_HISTORY_MATCH);
+  UI_BLOCK_HISTORY_MATCH.appendChild(UI_TEXT_HISTORY_MATCH);
+  UI_SCROLL_HISTORY_MATCH.appendChild(UI_BLOCK_HISTORY_MATCH);
 };
 
 GameManager.prototype.matchTimer = function () {
@@ -573,7 +608,7 @@ CanvasUI.prototype.winPlayer = function () {
   CONTEXT.font = "45px sans-serif";
   CONTEXT.fillStyle = "orange";
   CONTEXT.textAlign = "center";
-  CONTEXT.fillText(gameManager.endGame() + " Won!", x / 2, y / 2 - 30);
+  CONTEXT.fillText(gameManager.endGame() + " WIN!", x / 2, y / 2 - 30);
 };
 
 CanvasUI.prototype.sendMessage = function (mess) {
@@ -602,6 +637,9 @@ UI_BUTTON_MATCH_SETTINGS.addEventListener("click", function () {
 UI_BUTTON_GAME_SETTINGS.addEventListener("click", function () {
   switchPanel("gameSettings");
 });
+UI_BUTTON_HISTORY_MATCHES.addEventListener("click", function(){
+  switchPanel("historyMatch");
+})
 UI_BUTTON_UPDATE_LIST.addEventListener("click", function () {
   switchPanel("updateList");
 });

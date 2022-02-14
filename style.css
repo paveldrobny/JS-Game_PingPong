@@ -65,7 +65,7 @@ button {
   transform: translateX(-50%);
 }
 
-#ui-menu-panel-main, #ui-menu-panel-matchSettings, #ui-menu-panel-gameSettings, #ui-menu-panel-updateList {
+#ui-menu-panel-main, #ui-menu-panel-matchSettings, #ui-menu-panel-gameSettings, #ui-menu-panel-historyMatch, #ui-menu-panel-updateList {
   position: relative;
   width: 100%;
   display: flex;
@@ -73,7 +73,7 @@ button {
   align-items: center;
 }
 
-#ui-menu-panel-matchSettings, #ui-menu-panel-gameSettings, #ui-menu-panel-updateList {
+#ui-menu-panel-matchSettings, #ui-menu-panel-gameSettings, #ui-menu-panel-historyMatch, #ui-menu-panel-updateList {
   flex-wrap: wrap;
 }
 
@@ -301,13 +301,15 @@ button {
   background: #555;
 }
 
-#updateList-scroll {
+#updateList-scroll, #historyMatch-scroll {
   width: 500px;
   height: 342px;
   overflow: auto;
   overflow-x: hidden;
-  scrollbar-color: #888 rgba(68, 68, 68, 0.5); /* For Firefox */
-  scrollbar-width: thin; /* For Firefox */
+  scrollbar-color: #888 rgba(68, 68, 68, 0.5);
+  /* For Firefox */
+  scrollbar-width: thin;
+  /* For Firefox */
 }
 
 
@@ -325,4 +327,32 @@ button {
   color: white;
   border-bottom: 1px solid rgb(179, 179, 179);
   margin-bottom: 7px;
+}
+
+#historyMatch-scroll-content{
+  display: flex;
+  align-items: center;
+  flex-direction: column-reverse;
+}
+
+.history-block {
+  width: calc(100% - 40px);
+  margin: 0 10px 10px 10px;
+  padding: 10px;
+  border: 2px solid rgb(133, 133, 133);
+  background: rgb(47, 47, 47);
+}
+
+.history-title{
+  color: white;
+  text-shadow: 2px 0px 5px black;
+  font-weight: bold;
+  letter-spacing: 1px;
+  border-bottom: 2px solid rgb(133, 133, 133);
+  margin-bottom: 10px;
+}
+
+.history-text{
+  color: rgb(255, 255, 255);
+  font-weight: 500;
 }

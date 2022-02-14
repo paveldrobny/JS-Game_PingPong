@@ -27,8 +27,7 @@
                 <div id="ui-menu-panel-main-right">
                     <button id="ui-button-matchSettings" class="ui-button-panel-menu other">Match settings</button>
                     <button id="ui-button-gameSettings" class="ui-button-panel-menu other">Game settings</button>
-                    <button id="ui-button-historyMatches" class="ui-button-panel-menu unavailable">History matches<br><span
-                            style="font-size: 15px;">(Comming soon)</span> </button>
+                    <button id="ui-button-historyMatches" class="ui-button-panel-menu other">History matches</button>
                     <button id="ui-button-updateList" class="ui-button-panel-menu other">Update list</button>
                     <button id="ui-button-sourceCode" class="ui-button-panel-menu other">Source code <br><span
                             style="font-size: 15px;">(Redirect
@@ -37,7 +36,7 @@
             </div>
             <div id="ui-menu-panel-matchSettings" class="panel hide-panel">
                 <div id="ui-menu-panel-matchSettings-content">
-                    <div class="ui-menu-panel-title">Match settings</div>
+                    <div class="ui-menu-panel-title">MATCH SETTINGS</div>
                     <label>Score to win: 2 - 100 *</label>
                     <div class="selector-content">
                         <div class="selector-button-left" id="ui-button-score-minus"><i class="fas fa-angle-left"></i>
@@ -81,7 +80,7 @@
 
             <div id="ui-menu-panel-gameSettings" class="panel hide-panel">
                 <div id="ui-menu-panel-gameSettings-content">
-                    <div class="ui-menu-panel-title">Game settings</div>
+                    <div class="ui-menu-panel-title">GAME SETTINGS</div>
                     <label>Window zoom: 80% - 185% *</label>
                     <div class="selector-content">
                         <div class="selector-button-left" id="ui-button-windowZoom-minus"><i
@@ -106,10 +105,26 @@
                 <div class="message">* — settings are stored in Local storage.</div>
             </div>
 
+            <div id="ui-menu-panel-historyMatch" class="panel hide-panel">
+                <div id="ui-menu-panel-historyMatch-content">
+                    <div class="ui-menu-panel-title">HISTORY LIST</div>
+                    <div id="historyMatch-scroll">
+                        <div id="historyMatch-scroll-content">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div id="ui-menu-panel-updateList" class="panel hide-panel">
                 <div id="ui-menu-panel-updateList-content">
-                    <div class="ui-menu-panel-title">Update list</div>
+                    <div class="ui-menu-panel-title">UPDATE LIST</div>
                     <div id="updateList-scroll">
+                        <div class="update-block">
+                            <div class="update-block-title">HISTORY MATCHES - 14.02.2022</div>
+                            <div class="update-block-text">
+                                Now available in the main menu.</div>
+                        </div>
                         <div class="update-block">
                             <div class="update-block-title">NEW UI - 13.02.2022</div>
                             <div class="update-block-text">
