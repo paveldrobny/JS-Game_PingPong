@@ -27,7 +27,9 @@ const UI_PANEL_UPDATE_LIST = document.getElementById(
 );
 
 //////// UI - SCROLL
-const UI_SCROLL_HISTORY_MATCH = document.getElementById("historyMatch-scroll-content");
+const UI_SCROLL_HISTORY_MATCH = document.getElementById(
+  "historyMatch-scroll-content"
+);
 
 //////// UI - BUTTON
 const UI_BUTTON_START = document.getElementById("ui-button-start");
@@ -105,11 +107,11 @@ let indexMovementSpeed = 0;
 let keyState = [];
 
 function onKeyDown(event) {
-  keyState[event.key] = true;
+  keyState[event.keyCode] = true;
 }
 
 function onKeyUp(event) {
-  keyState[event.key] = false;
+  keyState[event.keyCode] = false;
 }
 
 window.addEventListener("keydown", onKeyDown);
@@ -298,15 +300,15 @@ Ball.prototype.restart = function () {
 //#region INPUT
 function Input() {
   this.keys = {
-    W: "w",
-    A: "a",
-    S: "s",
-    D: "d",
-    ArrowUp: "ArrowUp",
-    ArrowLeft: "ArrowLeft",
-    ArrowDown: "ArrowDown",
-    ArrowRight: "ArrowRight",
-    Spacebar: " "
+    W: 87,
+    A: 65,
+    S: 83,
+    D: 68,
+    ArrowUp: 38,
+    ArrowLeft: 37,
+    ArrowDown: 40,
+    ArrowRight: 39,
+    Spacebar: 32
   };
 }
 
@@ -377,7 +379,7 @@ GameManager.prototype.addScore = function () {
     gameManager.isGameEnded = true;
     canvasUI.winPlayer();
     canvasUI.sendMessage("Press the Spacebar to return to the main menu.");
-    if(!this.isHistorySaved){
+    if (!this.isHistorySaved) {
       this.isHistorySaved = true;
       this.historyMatches();
       store();
@@ -394,7 +396,9 @@ GameManager.prototype.historyMatches = function () {
   const HISTORY_TITLE = `${new Date().toLocaleString()}`;
 
   UI_TITLE_HISTORY_MATCH.innerHTML = HISTORY_TITLE;
-  UI_TEXT_HISTORY_MATCH.innerHTML = `WINNER - ${this.endGame()} | Score - ${this.player1Score} : ${this.player2Score} | Time - ${gameMinutes}m : ${gameSeconds}s`;
+  UI_TEXT_HISTORY_MATCH.innerHTML = `WINNER - ${this.endGame()} | Score - ${
+    this.player1Score
+  } : ${this.player2Score} | Time - ${gameMinutes}m : ${gameSeconds}s`;
   UI_BLOCK_HISTORY_MATCH.classList.add("history-block");
   UI_TITLE_HISTORY_MATCH.classList.add("history-title");
   UI_TEXT_HISTORY_MATCH.classList.add("history-text");
@@ -637,9 +641,9 @@ UI_BUTTON_MATCH_SETTINGS.addEventListener("click", function () {
 UI_BUTTON_GAME_SETTINGS.addEventListener("click", function () {
   switchPanel("gameSettings");
 });
-UI_BUTTON_HISTORY_MATCHES.addEventListener("click", function(){
+UI_BUTTON_HISTORY_MATCHES.addEventListener("click", function () {
   switchPanel("historyMatch");
-})
+});
 UI_BUTTON_UPDATE_LIST.addEventListener("click", function () {
   switchPanel("updateList");
 });
