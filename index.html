@@ -1,97 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ping Pong on JS</title>
     <!-- Include icons -->
-    <link href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" rel="stylesheet">
+    <link
+      href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
+      rel="stylesheet"
+    />
     <!-- Include fonts -->
     <link
-        href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&amp;display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-</head>
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-<body>
+  <body>
     <div id="ui-menu">
-        <div id="ui-menu-title">PING PONG on JS</div>
-        <button id="ui-button-back" class="other"><i class="fas fa-angle-left"></i></button>
-        <div id="ui-menu-content">
-            <div id="ui-menu-panel-main" class="panel">
-                <div id="ui-menu-panel-main-left">
-                    <button id="ui-button-start" class="ui-button-panel-menu start">Play</button>
-                    <button id="ui-button-exit" class="ui-button-panel-menu exit">Exit</button>
-                </div>
-                <div id="ui-menu-panel-main-right">
-                    <button id="ui-button-matchSettings" class="ui-button-panel-menu other">Match settings</button>
-                    <button id="ui-button-gameSettings" class="ui-button-panel-menu other">Game settings</button>
-                    <button id="ui-button-historyMatches" class="ui-button-panel-menu other">History matches</button>
-                    <button id="ui-button-updateList" class="ui-button-panel-menu other">Update list</button>
-                    <button id="ui-button-sourceCode" class="ui-button-panel-menu other">Source code <br><span
-                            style="font-size: 15px;">(Redirect
-                            to GitHub)</span> </button>
-                </div>
+      <div id="ui-menu-title">PING PONG on JS</div>
+      <button id="ui-button-back" class="other">
+        <i class="fas fa-angle-left"></i>
+      </button>
+      <div id="ui-menu-content">
+        <div id="ui-menu-panel-main" class="panel">
+          <div id="ui-menu-panel-main-left">
+            <button id="ui-button-start" class="ui-button-panel-menu start">
+              Play
+            </button>
+            <button id="ui-button-exit" class="ui-button-panel-menu exit">
+              Exit
+            </button>
+          </div>
+          <div id="ui-menu-panel-main-right">
+            <button
+              id="ui-button-matchSettings"
+              class="ui-button-panel-menu other"
+            >
+              Match settings
+            </button>
+            <button
+              id="ui-button-gameSettings"
+              class="ui-button-panel-menu other"
+            >
+              Game settings
+            </button>
+            <button
+              id="ui-button-historyMatches"
+              class="ui-button-panel-menu other"
+            >
+              History matches
+            </button>
+            <button
+              id="ui-button-updateList"
+              class="ui-button-panel-menu other"
+            >
+              Update list
+            </button>
+            <button
+              id="ui-button-sourceCode"
+              class="ui-button-panel-menu other"
+            >
+              Source code <br /><span style="font-size: 15px"
+                >(Redirect to GitHub)</span
+              >
+            </button>
+          </div>
+        </div>
+        <div id="ui-menu-panel-matchSettings" class="panel hide-panel">
+          <div id="ui-menu-panel-matchSettings-content">
+            <div class="ui-menu-panel-title">MATCH SETTINGS</div>
+            <label>Score to win: 2 - 100 *</label>
+            <div class="selector-content">
+              <div class="selector-button-left" id="ui-button-score-minus">
+                <i class="fas fa-angle-left"></i>
+              </div>
+              <div class="selector-text" id="ui-text-score">2</div>
+              <div class="selector-button-right" id="ui-button-score-plus">
+                <i class="fas fa-angle-right"></i>
+              </div>
             </div>
-            <div id="ui-menu-panel-matchSettings" class="panel hide-panel">
-                <div id="ui-menu-panel-matchSettings-content">
-                    <div class="ui-menu-panel-title">MATCH SETTINGS</div>
-                    <label>Score to win: 2 - 100 *</label>
-                    <div class="selector-content">
-                        <div class="selector-button-left" id="ui-button-score-minus"><i class="fas fa-angle-left"></i>
-                        </div>
-                        <div class="selector-text" id="ui-text-score">2</div>
-                        <div class="selector-button-right" id="ui-button-score-plus"><i class="fas fa-angle-right"></i>
-                        </div>
-                    </div>
-                    <label>Movement speed: 1.0x - 2.0x *</label>
-                    <div class="selector-content">
-                        <div class="selector-button-left" id="ui-button-movement-minus"><i
-                                class="fas fa-angle-left"></i>
-                        </div>
-                        <div class="selector-text" id="ui-text-movementSpeed">1x</div>
-                        <div class="selector-button-right" id="ui-button-movement-plus"><i
-                                class="fas fa-angle-right"></i>
-                        </div>
-                    </div>
-                    <label>Match type: Local, AI, Spectator</label>
-                    <div class="selector-content">
-                        <div class="selector-button-left" id="ui-button-matchType-minus"><i
-                                class="fas fa-angle-left"></i>
-                        </div>
-                        <div class="selector-text" id="ui-text-matchType">Local</div>
-                        <div class="selector-button-right" id="ui-button-matchType-plus"><i
-                                class="fas fa-angle-right"></i>
-                        </div>
-                    </div>
-                    <label>AI difficulty: Easy, Normal, Hard (Beta)</label>
-                    <div class="selector-content">
-                        <div class="selector-button-left" id="ui-button-difficultyAI-minus"><i
-                                class="fas fa-angle-left"></i></div>
-                        <div class="selector-text" id="ui-text-difficultyAI">Easy</div>
-                        <div class="selector-button-right" id="ui-button-difficultyAI-plus"><i
-                                class="fas fa-angle-right"></i></div>
-                    </div>
-
-                </div>
-                <div class="message">* — settings are stored in Local storage.</div>
+            <label>Movement speed: 1.0x - 2.0x *</label>
+            <div class="selector-content">
+              <div class="selector-button-left" id="ui-button-movement-minus">
+                <i class="fas fa-angle-left"></i>
+              </div>
+              <div class="selector-text" id="ui-text-movementSpeed">1x</div>
+              <div class="selector-button-right" id="ui-button-movement-plus">
+                <i class="fas fa-angle-right"></i>
+              </div>
             </div>
+            <label>Match type: Local, AI, Spectator</label>
+            <div class="selector-content">
+              <div class="selector-button-left" id="ui-button-matchType-minus">
+                <i class="fas fa-angle-left"></i>
+              </div>
+              <div class="selector-text" id="ui-text-matchType">Local</div>
+              <div class="selector-button-right" id="ui-button-matchType-plus">
+                <i class="fas fa-angle-right"></i>
+              </div>
+            </div>
+            <label>AI difficulty: Easy, Normal, Hard (Beta)</label>
+            <div class="selector-content">
+              <div
+                class="selector-button-left"
+                id="ui-button-difficultyAI-minus"
+              >
+                <i class="fas fa-angle-left"></i>
+              </div>
+              <div class="selector-text" id="ui-text-difficultyAI">Easy</div>
+              <div
+                class="selector-button-right"
+                id="ui-button-difficultyAI-plus"
+              >
+                <i class="fas fa-angle-right"></i>
+              </div>
+            </div>
+          </div>
+          <div class="message">* — settings are stored in Local storage.</div>
+        </div>
 
-            <div id="ui-menu-panel-gameSettings" class="panel hide-panel">
-                <div id="ui-menu-panel-gameSettings-content">
-                    <div class="ui-menu-panel-title">GAME SETTINGS</div>
-                    <label>Window zoom: 80% - 185% *</label>
-                    <div class="selector-content">
-                        <div class="selector-button-left" id="ui-button-windowZoom-minus"><i
-                                class="fas fa-angle-left"></i>
-                        </div>
-                        <div class="selector-text" id="ui-text-windowZoom">null</div>
-                        <div class="selector-button-right" id="ui-button-windowZoom-plus"><i
-                                class="fas fa-angle-right"></i>
-                        </div>
-                    </div>
-                    <!-- <label>Show keyboard helper *</label>
+        <div id="ui-menu-panel-gameSettings" class="panel hide-panel">
+          <div id="ui-menu-panel-gameSettings-content">
+            <div class="ui-menu-panel-title">GAME SETTINGS</div>
+            <label>Window zoom: 80% - 185% *</label>
+            <div class="selector-content">
+              <div class="selector-button-left" id="ui-button-windowZoom-minus">
+                <i class="fas fa-angle-left"></i>
+              </div>
+              <div class="selector-text" id="ui-text-windowZoom">null</div>
+              <div class="selector-button-right" id="ui-button-windowZoom-plus">
+                <i class="fas fa-angle-right"></i>
+              </div>
+            </div>
+            <!-- <label>Show keyboard helper *</label>
                     <div class="selector-content">
                         <div class="selector-button-left" id="ui-button-windowZoom-minus"><i
                                 class="fas fa-angle-left"></i>
@@ -101,67 +144,74 @@
                                 class="fas fa-angle-right"></i>
                         </div>
                     </div> -->
-                </div>
-                <div class="message">* — settings are stored in Local storage.</div>
-            </div>
-
-            <div id="ui-menu-panel-historyMatch" class="panel hide-panel">
-                <div id="ui-menu-panel-historyMatch-content">
-                    <div class="ui-menu-panel-title">HISTORY LIST</div>
-                    <div id="historyMatch-scroll">
-                        <div id="historyMatch-scroll-content">
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="ui-menu-panel-updateList" class="panel hide-panel">
-                <div id="ui-menu-panel-updateList-content">
-                    <div class="ui-menu-panel-title">UPDATE LIST</div>
-                    <div id="updateList-scroll">
-                        <div class="update-block">
-                            <div class="update-block-title">HISTORY MATCHES - 14.02.2022</div>
-                            <div class="update-block-text">
-                                Now available in the main menu.</div>
-                        </div>
-                        <div class="update-block">
-                            <div class="update-block-title">NEW UI - 13.02.2022</div>
-                            <div class="update-block-text">
-                                Settings are divided into separate sections for greater convenience.</div>
-                        </div>
-                        <div class="update-block">
-                            <div class="update-block-title">COUNTDOWN TIMER - 12.02.2022</div>
-                            <div class="update-block-text">
-                                Before the ball starts moving, you have 3 seconds to prepare.</div>
-                        </div>
-                        <div class="update-block">
-                            <div class="update-block-title">FIX PROBLEMS - 12.02.2022</div>
-                            <div class="update-block-text">
-                                Minor issues have been fixed, some mechanics have been reworked.</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          </div>
+          <div class="message">* — settings are stored in Local storage.</div>
         </div>
+
+        <div id="ui-menu-panel-historyMatch" class="panel hide-panel">
+          <div id="ui-menu-panel-historyMatch-content">
+            <div class="ui-menu-panel-title">HISTORY LIST</div>
+            <div id="historyMatch-scroll">
+              <div id="historyMatch-scroll-content"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="ui-menu-panel-updateList" class="panel hide-panel">
+          <div id="ui-menu-panel-updateList-content">
+            <div class="ui-menu-panel-title">UPDATE LIST</div>
+            <div id="updateList-scroll">
+              <div class="update-block">
+                <div class="update-block-title">
+                  HISTORY MATCHES - 14.02.2022
+                </div>
+                <div class="update-block-text">
+                  Now available in the main menu.
+                </div>
+              </div>
+              <div class="update-block">
+                <div class="update-block-title">NEW UI - 13.02.2022</div>
+                <div class="update-block-text">
+                  Settings are divided into separate sections for greater
+                  convenience.
+                </div>
+              </div>
+              <div class="update-block">
+                <div class="update-block-title">
+                  COUNTDOWN TIMER - 12.02.2022
+                </div>
+                <div class="update-block-text">
+                  Before the ball starts moving, you have 3 seconds to prepare.
+                </div>
+              </div>
+              <div class="update-block">
+                <div class="update-block-title">FIX PROBLEMS - 12.02.2022</div>
+                <div class="update-block-text">
+                  Minor issues have been fixed, some mechanics have been
+                  reworked.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div id="ui-timer">
-        <div id="ui-text-timer">00:00</div>
+      <div id="ui-text-timer">00:00</div>
     </div>
 
     <div id="ui-countdown">
-        <div id="ui-text-countdown">3</div>
+      <div id="ui-text-countdown">3</div>
     </div>
 
     <div id="keyboard-help">
-        <div id="keyboard-help-left">Player 1: W,S</div>
-        <div id="keyboard-help-right">Player 2: Arrow Up, Arrow Down</div>
+      <div id="keyboard-help-left">Player 1: W,S</div>
+      <div id="keyboard-help-right">Player 2: Arrow Up, Arrow Down</div>
     </div>
 
     <canvas id="canvas"></canvas>
 
     <script src="index.js"></script>
-</body>
-
+  </body>
 </html>

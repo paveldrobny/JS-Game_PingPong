@@ -1,103 +1,97 @@
 const DEV_MODE = false;
 
-//////// CANVAS
-const CANVAS = document.getElementById("canvas");
-const CONTEXT = canvas.getContext("2d");
+//////// Canvas
+const canvas = document.getElementById("canvas");
+const context = canvas.getContext("2d");
 
-//////// CANVAS - SIZE
+//////// Canvas - size
 const WIDTH = 880;
 const HEIGHT = 580;
 const CANVAS_WIDTH = 880;
 const CANVAS_HEIGHT = 580;
 
 //////// UI
-const UI_MENU = document.getElementById("ui-menu");
-const UI_TIMER = document.getElementById("ui-timer");
+const uiMenu = document.getElementById("ui-menu");
+const uiTimer = document.getElementById("ui-timer");
 
-//////// UI - PANEL
-const UI_PANEL_MAIN = document.getElementById("ui-menu-panel-main");
-const UI_PANEL_MATCH_SETTINGS = document.getElementById(
+//////// UI - panel
+const uiPanelMain = document.getElementById("ui-menu-panel-main");
+const uiPanelMatchSettings = document.getElementById(
   "ui-menu-panel-matchSettings"
 );
-const UI_PANEL_GAME_SETTINGS = document.getElementById(
+const uiPanelGameSettings = document.getElementById(
   "ui-menu-panel-gameSettings"
 );
-const UI_PANEL_UPDATE_LIST = document.getElementById(
-  "ui-menu-panel-updateList"
-);
+const uiPanelUpdateList = document.getElementById("ui-menu-panel-updateList");
 
-//////// UI - SCROLL
-const UI_SCROLL_HISTORY_MATCH = document.getElementById(
+//////// UI - scroll
+const uiScrollHistoryMatch = document.getElementById(
   "historyMatch-scroll-content"
 );
 
-//////// UI - BUTTON
-const UI_BUTTON_START = document.getElementById("ui-button-start");
-const UI_BUTTON_EXIT = document.getElementById("ui-button-exit");
-const UI_BUTTON_MATCH_SETTINGS = document.getElementById(
+//////// UI - button
+const uiButtonStart = document.getElementById("ui-button-start");
+const uiButtonExit = document.getElementById("ui-button-exit");
+const uiButtonMatchSettings = document.getElementById(
   "ui-button-matchSettings"
 );
-const UI_BUTTON_GAME_SETTINGS = document.getElementById(
-  "ui-button-gameSettings"
-);
-const UI_BUTTON_HISTORY_MATCHES = document.getElementById(
+const uiButtonGameSettings = document.getElementById("ui-button-gameSettings");
+const uiButtonHistoryMatches = document.getElementById(
   "ui-button-historyMatches"
 );
-const UI_BUTTON_UPDATE_LIST = document.getElementById("ui-button-updateList");
-const UI_BUTTON_SOURCE_CODE = document.getElementById("ui-button-sourceCode");
-const UI_BUTTON_BACK = document.getElementById("ui-button-back");
-const UI_BUTTON_SCORE_MINUS = document.getElementById("ui-button-score-minus");
-const UI_BUTTON_SCORE_PLUS = document.getElementById("ui-button-score-plus");
-const UI_BUTTON_MOVEMENT_MINUS = document.getElementById(
+const uiButtonUpdateList = document.getElementById("ui-button-updateList");
+const uiButtonSourceCode = document.getElementById("ui-button-sourceCode");
+const uiButtonBack = document.getElementById("ui-button-back");
+const uiButtonScoreMinus = document.getElementById("ui-button-score-minus");
+const uiButtonScorePlus = document.getElementById("ui-button-score-plus");
+const uiButtonMovementMinus = document.getElementById(
   "ui-button-movement-minus"
 );
-const UI_BUTTON_MOVEMENT_PLUS = document.getElementById(
-  "ui-button-movement-plus"
-);
-const UI_BUTTON_MATCH_TYPE_MINUS = document.getElementById(
+const uiButtonMovementPlus = document.getElementById("ui-button-movement-plus");
+const uiButtonMatchTypeMinus = document.getElementById(
   "ui-button-matchType-minus"
 );
-const UI_BUTTON_MATCH_TYPE_PLUS = document.getElementById(
+const uiButtonMatchTypePlus = document.getElementById(
   "ui-button-matchType-plus"
 );
-const UI_BUTTON_DIFFICULTY_AI_MINUS = document.getElementById(
+const uiButtonDifficultyAiMinus = document.getElementById(
   "ui-button-difficultyAI-minus"
 );
-const UI_BUTTON_DIFFICULTY_AI_PLUS = document.getElementById(
+const uiButtonDifficultyAiPlus = document.getElementById(
   "ui-button-difficultyAI-plus"
 );
-const UI_BUTTON_WINDOW_ZOOM_MINUS = document.getElementById(
+const uiButtonWindowZoomMinus = document.getElementById(
   "ui-button-windowZoom-minus"
 );
-const UI_BUTTON_WINDOW_ZOOM_PLUS = document.getElementById(
+const uiButtonWindowZoomPlus = document.getElementById(
   "ui-button-windowZoom-plus"
 );
 
-//////// UI - TEXT
-const UI_TEXT_SCORE = document.getElementById("ui-text-score");
-const UI_TEXT_MOVEMENT_SPEED = document.getElementById("ui-text-movementSpeed");
-const UI_TEXT_MATCH_TYPE = document.getElementById("ui-text-matchType");
-const UI_TEXT_DIFFICULTY_AI = document.getElementById("ui-text-difficultyAI");
-const UI_TEXT_WINDOW_ZOOM = document.getElementById("ui-text-windowZoom");
-const UI_TEXT_TIMER = document.getElementById("ui-text-timer");
+//////// UI - Text
+const uiTextScore = document.getElementById("ui-text-score");
+const uiTextMovementSpeed = document.getElementById("ui-text-movementSpeed");
+const uiTextMatchType = document.getElementById("ui-text-matchType");
+const uiTextDifficultyAi = document.getElementById("ui-text-difficultyAI");
+const uiTextWindowZoom = document.getElementById("ui-text-windowZoom");
+const uiTextTimer = document.getElementById("ui-text-timer");
 
-//////// OPTIONS - TEXT
-const OPTIONS_TEXT_MATCH_TYPES = ["Local", "AI", "Spectator"];
-const OPTIONS_TEXT_DIFFICULTIES_AI = ["Easy", "Normal", "Hard"];
-const OPTIONS_TEXT_MOVEMENT_SPEEDS = [
+//////// OPTIONS - Text
+const optionsTextMatchTypes = ["Local", "AI", "Spectator"];
+const optionsTextDifficultiesAi = ["Easy", "Normal", "Hard"];
+const optionsTextMovementSpeeds = [
   "Normal",
   "1.2x",
   "1.4x",
   "1.6x",
   "1.8x",
-  "2x"
+  "2x",
 ];
 
-//////// OPTIONS - VALUE
+//////// OPTIONS - Value
 const OPTIONS_VALUE_WINDOW_ZOOM_MAX = 185;
 
 ////////
-let defaultPositionY = CANVAS.height * 2 - 41;
+let defaultPositionY = canvas.height * 2 - 41;
 let gameSeconds = 0;
 let gameMinutes = 0;
 let indexMatchType = 0;
@@ -128,15 +122,15 @@ window.addEventListener("keyup", onKeyUp);
 //     CANVAS_WIDTH = CANVAS_HEIGHT * ratio;
 //   else CANVAS_HEIGHT = CANVAS_WIDTH / ratio;
 
-CANVAS.width = WIDTH;
-CANVAS.height = HEIGHT;
-//   CONTEXT.mozImageSmoothingEnabled = true;
-//   CONTEXT.webkitImageSmoothingEnabled = true;
-//   CONTEXT.msImageSmoothingEnabled = true;
-//   CONTEXT.imageSmoothingEnabled = true;
+canvas.width = WIDTH;
+canvas.height = HEIGHT;
+//   context.mozImageSmoothingEnabled = true;
+//   context.webkitImageSmoothingEnabled = true;
+//   context.msImageSmoothingEnabled = true;
+//   context.imageSmoothingEnabled = true;
 
-//   CANVAS.style.width = "" + CANVAS_WIDTH + "px";
-//   CANVAS.style.height = "" + CANVAS_HEIGHT + "px";
+//   canvas.style.width = "" + CANVAS_WIDTH + "px";
+//   canvas.style.height = "" + CANVAS_HEIGHT + "px";
 // };
 
 // resizeCanvas();
@@ -159,9 +153,9 @@ function switchPanel(openPanel) {
 
   for (let i = 0; i < PANELS.length; i++) {
     if (PANELS[i].id == "ui-menu-panel-main") {
-      UI_BUTTON_BACK.style.display = "block";
+      uiButtonBack.style.display = "block";
     } else {
-      UI_BUTTON_BACK.style.display = "block";
+      uiButtonBack.style.display = "block";
     }
 
     if (PANELS[i].id === `ui-menu-panel-${openPanel}`) {
@@ -186,7 +180,7 @@ function store() {
   localStorage.ScoreToEnd = gameManager.scoreToEnd;
   localStorage.ZoomIndex = indexWindowZoom;
   localStorage.MovementSpeed = indexMovementSpeed;
-  localStorage.HistoryMatches = UI_SCROLL_HISTORY_MATCH.innerHTML;
+  localStorage.HistoryMatches = uiScrollHistoryMatch.innerHTML;
 }
 
 function getValue() {
@@ -219,8 +213,8 @@ function getValue() {
     : (indexMovementSpeed = MovementSpeedValue);
 
   !HISTORY_MATCHES
-    ? (UI_SCROLL_HISTORY_MATCH.innerHTML = "")
-    : (UI_SCROLL_HISTORY_MATCH.innerHTML = HISTORY_MATCHES);
+    ? (uiScrollHistoryMatch.innerHTML = "")
+    : (uiScrollHistoryMatch.innerHTML = HISTORY_MATCHES);
 }
 //#endregion
 
@@ -235,8 +229,8 @@ function Player(x, y, color) {
 }
 
 Player.prototype.draw = function () {
-  CONTEXT.fillStyle = this.color;
-  CONTEXT.fillRect(this.x, this.y, this.w, this.h);
+  context.fillStyle = this.color;
+  context.fillRect(this.x, this.y, this.w, this.h);
 };
 
 Player.prototype.move = function () {
@@ -262,11 +256,11 @@ function Ball(x, y, r, color) {
 }
 
 Ball.prototype.draw = function () {
-  CONTEXT.beginPath();
-  CONTEXT.fillStyle = this.color;
-  CONTEXT.arc(this.x, this.y, this.r, Math.PI * 2, 0);
-  CONTEXT.fill();
-  CONTEXT.closePath();
+  context.beginPath();
+  context.fillStyle = this.color;
+  context.arc(this.x, this.y, this.r, Math.PI * 2, 0);
+  context.fill();
+  context.closePath();
 };
 
 Ball.prototype.move = function () {
@@ -308,7 +302,7 @@ function Input() {
     ArrowLeft: 37,
     ArrowDown: 40,
     ArrowRight: 39,
-    Spacebar: 32
+    Spacebar: 32,
   };
 }
 
@@ -390,22 +384,22 @@ GameManager.prototype.addScore = function () {
 };
 
 GameManager.prototype.historyMatches = function () {
-  const UI_BLOCK_HISTORY_MATCH = document.createElement("div");
-  const UI_TITLE_HISTORY_MATCH = document.createElement("div");
-  const UI_TEXT_HISTORY_MATCH = document.createElement("div");
-  const HISTORY_TITLE = `${new Date().toLocaleString()}`;
+  const uiBlockHistoryMatch = document.createElement("div");
+  const uiTitleHistoryMatch = document.createElement("div");
+  const uiTextHistoryMatch = document.createElement("div");
+  const historyTitle = `${new Date().toLocaleString()}`;
 
-  UI_TITLE_HISTORY_MATCH.innerHTML = HISTORY_TITLE;
-  UI_TEXT_HISTORY_MATCH.innerHTML = `WINNER - ${this.endGame()} | Score - ${
+  uiTitleHistoryMatch.innerHTML = historyTitle;
+  uiTextHistoryMatch.innerHTML = `WINNER - ${this.endGame()} | Score - ${
     this.player1Score
   } : ${this.player2Score} | Time - ${gameMinutes}m : ${gameSeconds}s`;
-  UI_BLOCK_HISTORY_MATCH.classList.add("history-block");
-  UI_TITLE_HISTORY_MATCH.classList.add("history-title");
-  UI_TEXT_HISTORY_MATCH.classList.add("history-text");
+  uiBlockHistoryMatch.classList.add("history-block");
+  uiTitleHistoryMatch.classList.add("history-title");
+  uiTextHistoryMatch.classList.add("history-text");
 
-  UI_BLOCK_HISTORY_MATCH.appendChild(UI_TITLE_HISTORY_MATCH);
-  UI_BLOCK_HISTORY_MATCH.appendChild(UI_TEXT_HISTORY_MATCH);
-  UI_SCROLL_HISTORY_MATCH.appendChild(UI_BLOCK_HISTORY_MATCH);
+  uiBlockHistoryMatch.appendChild(uiTitleHistoryMatch);
+  uiBlockHistoryMatch.appendChild(uiTextHistoryMatch);
+  uiScrollHistoryMatch.appendChild(uiBlockHistoryMatch);
 };
 
 GameManager.prototype.matchTimer = function () {
@@ -417,7 +411,7 @@ GameManager.prototype.matchTimer = function () {
       gameMinutes += 1;
     }
 
-    UI_TEXT_TIMER.innerHTML = `${setTextTimer(gameMinutes)}:${setTextTimer(
+    uiTextTimer.innerHTML = `${setTextTimer(gameMinutes)}:${setTextTimer(
       gameSeconds
     )}`;
   }
@@ -446,8 +440,8 @@ GameManager.prototype.minusMatchType = function () {
 };
 
 GameManager.prototype.plusMatchType = function () {
-  if (indexMatchType >= OPTIONS_TEXT_MATCH_TYPES.length - 1) {
-    return (indexMatchType = OPTIONS_TEXT_MATCH_TYPES.length - 1);
+  if (indexMatchType >= optionsTextMatchTypes.length - 1) {
+    return (indexMatchType = optionsTextMatchTypes.length - 1);
   }
   indexMatchType++;
 };
@@ -460,8 +454,8 @@ GameManager.prototype.minusAIDifficulty = function () {
 };
 
 GameManager.prototype.plusAIDifficulty = function () {
-  if (indexDifficultyAI >= OPTIONS_TEXT_DIFFICULTIES_AI.length - 1) {
-    return (indexDifficultyAI = OPTIONS_TEXT_DIFFICULTIES_AI.length - 1);
+  if (indexDifficultyAI >= optionsTextDifficultiesAi.length - 1) {
+    return (indexDifficultyAI = optionsTextDifficultiesAi.length - 1);
   }
   indexDifficultyAI++;
 };
@@ -491,19 +485,19 @@ GameManager.prototype.minusMovementSpeed = function () {
 };
 
 GameManager.prototype.plusMovementSpeed = function () {
-  if (indexMovementSpeed >= OPTIONS_TEXT_MOVEMENT_SPEEDS.length - 1) {
-    return (indexMovementSpeed = OPTIONS_TEXT_MOVEMENT_SPEEDS.length - 1);
+  if (indexMovementSpeed >= optionsTextMovementSpeeds.length - 1) {
+    return (indexMovementSpeed = optionsTextMovementSpeeds.length - 1);
   }
   indexMovementSpeed++;
   store();
 };
 
-const UI_COUNTDOWN = document.getElementById("ui-countdown");
-const UI_TEXT_COUNTDOWN = document.getElementById("ui-text-countdown");
+const ui_countdown = document.getElementById("ui-countdown");
+const ui_text_countdown = document.getElementById("ui-text-countdown");
 
 GameManager.prototype.startGame = function () {
-  UI_MENU.style.display = "none";
-  UI_COUNTDOWN.style.display = "block";
+  uiMenu.style.display = "none";
+  ui_countdown.style.display = "block";
 
   player1.speed = indexMovementSpeed + 6;
   player2.speed = indexMovementSpeed + 6;
@@ -521,11 +515,11 @@ GameManager.prototype.startGame = function () {
 
   const timer = setInterval(function () {
     countdownValue--;
-    UI_TEXT_COUNTDOWN.innerHTML = countdownValue;
+    ui_text_countdown.innerHTML = countdownValue;
 
     if (countdownValue == 0) {
-      UI_COUNTDOWN.style.display = "none";
-      UI_TIMER.style.display = "block";
+      ui_countdown.style.display = "none";
+      uiTimer.style.display = "block";
       gameManager.isGameStarted = true;
       setInterval(gameManager.matchTimer, 1000);
       clearInterval(timer);
@@ -591,10 +585,10 @@ function CanvasUI() {
 }
 
 CanvasUI.prototype.score = function () {
-  CONTEXT.font = "27px sans-serif";
-  CONTEXT.fillStyle = "white";
-  CONTEXT.textAlign = "center";
-  CONTEXT.fillText(
+  context.font = "27px sans-serif";
+  context.fillStyle = "white";
+  context.textAlign = "center";
+  context.fillText(
     gameManager.player1Score + " : " + gameManager.player2Score,
     x / 2,
     30
@@ -602,88 +596,79 @@ CanvasUI.prototype.score = function () {
 };
 
 CanvasUI.prototype.timer = function () {
-  CONTEXT.font = "18px sans-serif";
-  CONTEXT.fillStyle = "gray";
-  CONTEXT.textAlign = "center";
-  CONTEXT.fillText(gameMinutes + ":" + gameSeconds, x / 2, 55);
+  context.font = "18px sans-serif";
+  context.fillStyle = "gray";
+  context.textAlign = "center";
+  context.fillText(gameMinutes + ":" + gameSeconds, x / 2, 55);
 };
 
 CanvasUI.prototype.winPlayer = function () {
-  CONTEXT.font = "45px sans-serif";
-  CONTEXT.fillStyle = "orange";
-  CONTEXT.textAlign = "center";
-  CONTEXT.fillText(gameManager.endGame() + " WIN!", x / 2, y / 2 - 30);
+  context.font = "45px sans-serif";
+  context.fillStyle = "orange";
+  context.textAlign = "center";
+  context.fillText(gameManager.endGame() + " WIN!", x / 2, y / 2 - 30);
 };
 
 CanvasUI.prototype.sendMessage = function (mess) {
-  CONTEXT.font = "19px sans-serif";
-  CONTEXT.fillStyle = "#a0a0a0";
-  CONTEXT.textAlign = "center";
-  CONTEXT.fillText(mess, x / 2, y - 26);
+  context.font = "19px sans-serif";
+  context.fillStyle = "#a0a0a0";
+  context.textAlign = "center";
+  context.fillText(mess, x / 2, y - 26);
 };
 
 CanvasUI.prototype.remainingScore = function () {
-  CONTEXT.font = "19px sans-serif";
-  CONTEXT.fillStyle = "rgba(144, 144, 144, 0.8)";
-  CONTEXT.textAlign = "center";
-  CONTEXT.fillText(gameManager.checkScoreToWin(), x / 2, y - 26);
+  context.font = "19px sans-serif";
+  context.fillStyle = "rgba(144, 144, 144, 0.8)";
+  context.textAlign = "center";
+  context.fillText(gameManager.checkScoreToWin(), x / 2, y - 26);
 };
 //#endregion
 
 //#region EVENTS
-UI_BUTTON_START.addEventListener("click", gameManager.startGame);
-UI_BUTTON_EXIT.addEventListener("click", function () {
+uiButtonStart.addEventListener("click", gameManager.startGame);
+uiButtonExit.addEventListener("click", function () {
   window.close();
 });
-UI_BUTTON_MATCH_SETTINGS.addEventListener("click", function () {
+uiButtonMatchSettings.addEventListener("click", function () {
   switchPanel("matchSettings");
 });
-UI_BUTTON_GAME_SETTINGS.addEventListener("click", function () {
+uiButtonGameSettings.addEventListener("click", function () {
   switchPanel("gameSettings");
 });
-UI_BUTTON_HISTORY_MATCHES.addEventListener("click", function () {
+uiButtonHistoryMatches.addEventListener("click", function () {
   switchPanel("historyMatch");
 });
-UI_BUTTON_UPDATE_LIST.addEventListener("click", function () {
+uiButtonUpdateList.addEventListener("click", function () {
   switchPanel("updateList");
 });
-UI_BUTTON_SOURCE_CODE.addEventListener("click", function () {
+uiButtonSourceCode.addEventListener("click", function () {
   open("https://github.com/paveldrobny/JS-Game_PingPong");
 });
-UI_BUTTON_BACK.addEventListener("click", function () {
+uiButtonBack.addEventListener("click", function () {
   switchPanel("main");
-  UI_BUTTON_BACK.style.display = "none";
+  uiButtonBack.style.display = "none";
 });
 
-UI_BUTTON_SCORE_MINUS.addEventListener("click", gameManager.minusScoreToEnd);
-UI_BUTTON_SCORE_PLUS.addEventListener("click", gameManager.plusScoreToEnd);
-UI_BUTTON_MOVEMENT_MINUS.addEventListener(
-  "click",
-  gameManager.minusMovementSpeed
-);
-UI_BUTTON_MOVEMENT_PLUS.addEventListener(
-  "click",
-  gameManager.plusMovementSpeed
-);
-UI_BUTTON_MATCH_TYPE_MINUS.addEventListener(
-  "click",
-  gameManager.minusMatchType
-);
-UI_BUTTON_MATCH_TYPE_PLUS.addEventListener("click", gameManager.plusMatchType);
-UI_BUTTON_DIFFICULTY_AI_MINUS.addEventListener(
+uiButtonScoreMinus.addEventListener("click", gameManager.minusScoreToEnd);
+uiButtonScorePlus.addEventListener("click", gameManager.plusScoreToEnd);
+uiButtonMovementMinus.addEventListener("click", gameManager.minusMovementSpeed);
+uiButtonMovementPlus.addEventListener("click", gameManager.plusMovementSpeed);
+uiButtonMatchTypeMinus.addEventListener("click", gameManager.minusMatchType);
+uiButtonMatchTypePlus.addEventListener("click", gameManager.plusMatchType);
+uiButtonDifficultyAiMinus.addEventListener(
   "click",
   gameManager.minusAIDifficulty
 );
-UI_BUTTON_DIFFICULTY_AI_PLUS.addEventListener(
+uiButtonDifficultyAiPlus.addEventListener(
   "click",
   gameManager.plusAIDifficulty
 );
-UI_BUTTON_WINDOW_ZOOM_MINUS.addEventListener("click", gameManager.minusZoom);
-UI_BUTTON_WINDOW_ZOOM_PLUS.addEventListener("click", gameManager.plusZoom);
+uiButtonWindowZoomMinus.addEventListener("click", gameManager.minusZoom);
+uiButtonWindowZoomPlus.addEventListener("click", gameManager.plusZoom);
 //#endregion
 
 const update = () => {
-  CONTEXT.clearRect(0, 0, WIDTH, HEIGHT);
+  context.clearRect(0, 0, WIDTH, HEIGHT);
 
   if (gameManager.isGameStarted) {
     player1.draw();
@@ -701,13 +686,12 @@ const update = () => {
     canvasUI.score();
   }
   if (!gameManager.isGameStarted) {
-    UI_TEXT_SCORE.innerHTML = gameManager.scoreToEnd;
-    UI_TEXT_MATCH_TYPE.innerHTML = OPTIONS_TEXT_MATCH_TYPES[indexMatchType];
-    UI_TEXT_DIFFICULTY_AI.innerHTML =
-      OPTIONS_TEXT_DIFFICULTIES_AI[indexDifficultyAI];
-    UI_TEXT_WINDOW_ZOOM.innerHTML = `${indexWindowZoom}%`;
-    UI_TEXT_MOVEMENT_SPEED.innerHTML =
-      OPTIONS_TEXT_MOVEMENT_SPEEDS[indexMovementSpeed];
+    uiTextScore.innerHTML = gameManager.scoreToEnd;
+    uiTextMatchType.innerHTML = optionsTextMatchTypes[indexMatchType];
+    uiTextDifficultyAi.innerHTML = optionsTextDifficultiesAi[indexDifficultyAI];
+    uiTextWindowZoom.innerHTML = `${indexWindowZoom}%`;
+    uiTextMovementSpeed.innerHTML =
+      optionsTextMovementSpeeds[indexMovementSpeed];
     document.body.style.zoom = `${indexWindowZoom}%`;
   }
   requestAnimationFrame(update);
